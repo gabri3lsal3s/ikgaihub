@@ -42,6 +42,7 @@ O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvi
 - **Formulários**: React Hook Form + Zod
 - **Notificações**: React Hot Toast
 - **Ícones**: Lucide React
+- **Gráficos**: Chart.js + React-Chartjs-2
 
 ### **Backend**
 - **Plataforma**: Supabase (Auth + PostgreSQL + RLS)
@@ -63,15 +64,19 @@ O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvi
 - **🏃‍♂️ Gestão de Exercícios**: CRUD completo organizado por dia da semana
 - **📊 Dashboard Inteligente**: Informações baseadas no horário atual
 - **📈 Estatísticas**: Componentes especializados para nutrição e exercícios
+- **🎯 Sistema de Metas**: Estrutura básica implementada (60%)
+- **📊 Gráficos Interativos**: Pizza e barras para visualização de dados
+- **✅ Marcadores de Conclusão**: Persistentes entre sessões
 
 ### 🔄 **Em Desenvolvimento**
-- **🎯 Sistema de Metas**: Definição e acompanhamento de objetivos (60%)
+- **🎯 Sistema de Metas**: Interface completa e funcionalidades avançadas
 
 ### 📋 **Planejadas**
 - **⏰ Sistema de Lembretes**: Notificações personalizadas
 - **🏆 Gamificação**: Badges, conquistas e desafios
 - **📱 PWA Completo**: Funcionalidades offline avançadas
 - **🔗 Integrações**: APIs de nutrição e wearables
+- **📈 Histórico Detalhado**: Relatórios avançados de progresso
 
 ## 🚀 Instalação e Configuração
 
@@ -102,7 +107,15 @@ VITE_SUPABASE_URL=https://your-project.supabase.co
 VITE_SUPABASE_ANON_KEY=your-anon-key
 ```
 
-### **4. Execute o projeto**
+### **4. Configure o Supabase**
+1. Crie um projeto no Supabase
+2. Execute os scripts SQL na ordem:
+   - `docs/sql/database-schema.sql`
+   - `docs/sql/goals-system.sql`
+   - `docs/sql/progress-tables.sql`
+3. Configure as políticas RLS se necessário
+
+### **5. Execute o projeto**
 ```bash
 # Desenvolvimento
 npm run dev
@@ -133,6 +146,23 @@ src/
 └── constants/         # Constantes da aplicação
 ```
 
+## 🗄️ Banco de Dados
+
+### **Tabelas Principais**
+- `users` - Usuários autenticados (Supabase Auth)
+- `exercises` - Exercícios disponíveis
+- `recipes` - Receitas e refeições
+- `goals` - Metas do usuário
+- `goal_progress` - Rastreamento de progresso
+- `achievements` - Conquistas e badges
+- `reminders` - Sistema de lembretes (planejado)
+
+### **Scripts SQL Disponíveis**
+- 📁 [docs/sql/database-schema.sql](./docs/sql/database-schema.sql) - Schema completo
+- 📁 [docs/sql/goals-system.sql](./docs/sql/goals-system.sql) - Sistema de metas
+- 📁 [docs/sql/progress-tables.sql](./docs/sql/progress-tables.sql) - Tabelas de progresso
+- 📁 [docs/sql/fix-rls-policies.sql](./docs/sql/fix-rls-policies.sql) - Políticas de segurança
+
 ## 🧪 Testes
 
 ```bash
@@ -146,14 +176,69 @@ npm run test:ui
 npm run test:coverage
 ```
 
+## 🔧 Desenvolvimento
+
+### **Scripts Disponíveis**
+```bash
+npm run dev          # Servidor de desenvolvimento
+npm run build        # Build de produção
+npm run preview      # Preview do build
+npm run lint         # Verificação de lint
+npm run lint:fix     # Correção automática de lint
+npm run test         # Execução de testes
+npm run type-check   # Verificação de tipos TypeScript
+```
+
+### **Padrões de Código**
+- TypeScript strict mode
+- ESLint + Prettier
+- Componentes funcionais com hooks
+- Serviços para lógica de negócio
+- Custom hooks para reutilização
+
 ## 📚 Documentação
 
+### **📁 [docs/projeto/](./docs/projeto/)**
 - **[📋 PRD](./docs/projeto/PRD.md)** - Documento de Requisitos do Produto
 - **[🏗️ Arquitetura](./docs/projeto/ARQUITETURA.md)** - Documentação técnica completa
 - **[🗺️ Roadmap](./docs/projeto/ROADMAP.md)** - Cronograma de desenvolvimento
 - **[📊 Resumo Executivo](./docs/projeto/RESUMO-EXECUTIVO.md)** - Status atual
-- **[📝 Changelog](./CHANGELOG.md)** - Histórico de versões
+
+### **📁 [docs/instrucoes/](./docs/instrucoes/)**
+- **[📱 PWA-ASSETS-INSTRUCTIONS.md](./docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md)** - Configuração PWA
+- **[🔒 INSTRUCOES-CORRECAO-RLS.md](./docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md)** - Políticas de segurança
+
+### **Outros Documentos**
+- **[📝 CHANGELOG.md](./CHANGELOG.md)** - Histórico de versões
 - **[📚 Índice](./docs/INDICE.md)** - Organização da documentação
+
+## 🎯 Funcionalidades Principais
+
+### **Dashboard Inteligente**
+- Widgets de exercícios do dia
+- Próxima refeição planejada
+- Estatísticas rápidas de progresso
+- Gráficos de nutrição e exercícios
+- Marcadores de conclusão persistentes
+
+### **Sistema de Metas**
+- Criação e acompanhamento de metas
+- Conquistas e badges
+- Progresso visual
+- Lembretes personalizados (planejado)
+
+### **Acompanhamento de Progresso**
+- Marcadores de conclusão persistentes
+- Estatísticas semanais, mensais e anuais
+- Gráficos interativos
+- Histórico detalhado (planejado)
+
+## 📱 PWA Features
+
+- **Instalação**: Adicione à tela inicial
+- **Offline**: Funcionalidades básicas offline
+- **Notificações**: Push notifications (em desenvolvimento)
+- **Responsivo**: Design adaptativo mobile-first
 
 ## 🤝 Contribuição
 
@@ -193,6 +278,15 @@ Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICE
 - [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
 - [Supabase](https://supabase.com/) - Backend como serviço
 - [Vite](https://vitejs.dev/) - Build tool
+- [Chart.js](https://www.chartjs.org/) - Gráficos interativos
+
+## 🔗 Links Úteis
+
+- **[Supabase](https://supabase.com/docs)**
+- **[React](https://react.dev/)**
+- **[Tailwind CSS](https://tailwindcss.com/docs)**
+- **[Vite](https://vitejs.dev/)**
+- **[TypeScript](https://www.typescriptlang.org/docs)**
 
 ---
 

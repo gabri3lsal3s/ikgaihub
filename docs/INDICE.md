@@ -1,7 +1,7 @@
 # 📚 Índice da Documentação - IkigaiHub
 
 ## 🏠 Documentação Principal
-- **[README.md](./README.md)** - Página inicial da documentação
+- **[README.md](../README.md)** - Página inicial da documentação (unificada)
 - **[INDICE.md](./INDICE.md)** - Este arquivo de índice
 - **[CHANGELOG.md](../CHANGELOG.md)** - Histórico de mudanças e versões
 
@@ -30,7 +30,7 @@
 ## 🎯 Como Usar Este Índice
 
 ### Para Desenvolvedores
-1. **Início**: Comece pelo [README.md](./README.md) para visão geral
+1. **Início**: Comece pelo [README.md](../README.md) para visão geral completa
 2. **Arquitetura**: Consulte [ARQUITETURA.md](./projeto/ARQUITETURA.md) para entender a estrutura técnica
 3. **Desenvolvimento**: Use [ROADMAP.md](./projeto/ROADMAP.md) para próximos passos
 4. **Mudanças**: Acompanhe o [CHANGELOG.md](../CHANGELOG.md) para histórico de versões
@@ -41,7 +41,7 @@
 3. **RLS**: Use [INSTRUCOES-CORRECAO-RLS.md](./instrucoes/INSTRUCOES-CORRECAO-RLS.md) se necessário
 
 ### Para Entendimento do Projeto
-1. **Visão Geral**: [RESUMO-EXECUTIVO.md](./projeto/RESUMO-EXECUTIVO.md)
+1. **Visão Geral**: [README.md](../README.md) - Documentação unificada
 2. **Requisitos**: [PRD.md](./projeto/PRD.md)
 3. **Planejamento**: [ROADMAP.md](./projeto/ROADMAP.md)
 4. **Histórico**: [CHANGELOG.md](../CHANGELOG.md)
@@ -53,7 +53,7 @@
 Esta documentação foi organizada seguindo o princípio **DRY (Don't Repeat Yourself)** e estruturada em categorias lógicas:
 
 ### **📁 Documentação Principal**
-- **README.md**: Visão geral e introdução
+- **README.md**: Visão geral unificada e completa (raiz do projeto)
 - **INDICE.md**: Navegação e organização
 - **CHANGELOG.md**: Histórico de versões
 
@@ -78,9 +78,11 @@ Esta documentação foi organizada seguindo o princípio **DRY (Don't Repeat You
 ## 🔄 Atualizações Recentes
 
 ### **Dezembro 2024 - v1.0.0**
+- ✅ **README.md Unificado**: Documentação consolidada na raiz do projeto
 - ✅ **CHANGELOG.md**: Histórico completo de versões criado
 - ✅ **ARQUITETURA.md**: Documentação técnica completa atualizada
 - ✅ **INDICE.md**: Reorganização seguindo princípio DRY
+- ✅ **Princípio DRY**: Eliminação de duplicação de documentação
 - 🔄 **Fase 6**: Sistema de Metas (60% concluído)
 
 ### **Próximas Atualizações**
@@ -103,7 +105,6 @@ Esta documentação foi organizada seguindo o princípio **DRY (Don't Repeat You
 - **Fase 3**: CRUD Básico (v0.5.0 - v0.6.0)
 - **Fase 4**: Dashboard Inteligente (v0.7.0)
 - **Fase 5**: Melhorias nas Estatísticas (v0.8.0)
-- **Fase 6**: Sistema de Metas (v0.9.0 - em progresso)
 
 ---
 
@@ -141,7 +142,7 @@ Esta documentação foi organizada seguindo o princípio **DRY (Don't Repeat You
 ## 📋 Checklist de Documentação
 
 ### **✅ Concluído**
-- [x] README.md - Visão geral do projeto
+- [x] README.md - Visão geral unificada (raiz)
 - [x] INDICE.md - Organização da documentação
 - [x] CHANGELOG.md - Histórico de versões
 - [x] ARQUITETURA.md - Documentação técnica completa
@@ -150,6 +151,7 @@ Esta documentação foi organizada seguindo o princípio **DRY (Don't Repeat You
 - [x] ROADMAP.md - Cronograma de desenvolvimento
 - [x] Scripts SQL organizados
 - [x] Instruções técnicas
+- [x] **Princípio DRY aplicado** - Eliminação de duplicação
 
 ### **🔄 Em Progresso**
 - [ ] Atualização automática do CHANGELOG.md
