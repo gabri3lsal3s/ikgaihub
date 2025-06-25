@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#10B981" />
+    <meta name="description" content="IkigaiHub - Hub de Ferramentas de Saúde. PWA mobile-first para gestão de plano alimentar e exercícios." />
+    <meta name="keywords" content="saúde, nutrição, exercícios, pwa, mobile" />
+    <meta name="author" content="Gabriel" />
+    
+    <!-- Apple PWA Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="IkigaiHub" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="IkigaiHub - Hub de Ferramentas de Saúde" />
+    <meta property="og:description" content="PWA mobile-first para gestão de plano alimentar e exercícios" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ikgaihub.vercel.app" />
+    <meta property="og:image" content="/og-image.png" />
+    
+    <!-- Twitter Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="IkigaiHub - Hub de Ferramentas de Saúde" />
+    <meta name="twitter:description" content="PWA mobile-first para gestão de plano alimentar e exercícios" />
+    <meta name="twitter:image" content="/og-image.png" />
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+    
+    <title>IkigaiHub - Hub de Ferramentas de Saúde</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- PWA Install Prompt -->
+    <div id="pwa-install-prompt" class="hidden">
+      <div class="pwa-prompt">
+        <p>Instale o IkigaiHub para uma melhor experiência!</p>
+        <button id="pwa-install-btn">Instalar</button>
+        <button id="pwa-dismiss-btn">Agora não</button>
+      </div>
+    </div>
+  </body>
+</html> 

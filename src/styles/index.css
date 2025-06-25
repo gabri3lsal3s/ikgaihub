@@ -1,0 +1,166 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =====================================================
+   Estilos Globais - IkigaiHub
+   ===================================================== */
+
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+  
+  body {
+    @apply bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100;
+  }
+  
+  * {
+    @apply border-gray-200 dark:border-gray-700;
+  }
+}
+
+@layer components {
+  /* Botões personalizados */
+  .btn {
+    @apply inline-flex items-center justify-center rounded-lg px-4 py-2 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none;
+  }
+  
+  .btn-primary {
+    @apply bg-ikigai-green text-white hover:bg-ikigai-green-dark focus:ring-ikigai-green;
+  }
+  
+  .btn-secondary {
+    @apply bg-ikigai-black text-white hover:bg-ikigai-black-dark focus:ring-ikigai-black;
+  }
+  
+  .btn-outline {
+    @apply border border-gray-300 bg-white text-gray-700 hover:bg-gray-50 focus:ring-ikigai-green dark:border-gray-600 dark:bg-gray-800 dark:text-gray-200 dark:hover:bg-gray-700;
+  }
+  
+  .btn-ghost {
+    @apply text-gray-700 hover:bg-gray-100 focus:ring-ikigai-green dark:text-gray-200 dark:hover:bg-gray-800;
+  }
+  
+  .btn-danger {
+    @apply bg-red-600 text-white hover:bg-red-700 focus:ring-red-500;
+  }
+  
+  /* Tamanhos de botão */
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs;
+  }
+  
+  .btn-lg {
+    @apply px-6 py-3 text-base;
+  }
+  
+  /* Cards personalizados */
+  .card {
+    @apply bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700;
+  }
+  
+  .card-soft {
+    @apply shadow-soft;
+  }
+  
+  .card-medium {
+    @apply shadow-medium;
+  }
+  
+  .card-large {
+    @apply shadow-large;
+  }
+  
+  /* Padding de cards */
+  .card-p-sm {
+    @apply p-4;
+  }
+  
+  .card-p-md {
+    @apply p-6;
+  }
+  
+  .card-p-lg {
+    @apply p-8;
+  }
+  
+  /* Inputs personalizados */
+  .input {
+    @apply block w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-sm placeholder-gray-400 focus:border-ikigai-green focus:outline-none focus:ring-1 focus:ring-ikigai-green disabled:cursor-not-allowed disabled:opacity-50 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400 dark:focus:border-ikigai-green;
+  }
+  
+  /* Labels personalizados */
+  .label {
+    @apply block text-sm font-medium text-gray-700 dark:text-gray-200 mb-1;
+  }
+  
+  /* Animações personalizadas */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-slide-down {
+    animation: slideDown 0.3s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.2s ease-out;
+  }
+}
+
+@layer utilities {
+  /* Utilitários personalizados */
+  .text-gradient {
+    @apply bg-gradient-to-r from-ikigai-green to-ikigai-green-dark bg-clip-text text-transparent;
+  }
+  
+  .bg-gradient-primary {
+    @apply bg-gradient-to-br from-ikigai-green to-ikigai-green-dark;
+  }
+  
+  .bg-gradient-secondary {
+    @apply bg-gradient-to-br from-ikigai-black to-ikigai-black-dark;
+  }
+  
+  /* Scrollbar personalizada */
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: #10B981 #E5E7EB;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background: #E5E7EB;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background: #10B981;
+    border-radius: 3px;
+  }
+  
+  .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+    background: #059669;
+  }
+  
+  /* Dark mode scrollbar */
+  .dark .scrollbar-thin {
+    scrollbar-color: #10B981 #374151;
+  }
+  
+  .dark .scrollbar-thin::-webkit-scrollbar-track {
+    background: #374151;
+  }
+}
+
+/* =====================================================
+   FIM DOS ESTILOS GLOBAIS
+   ===================================================== */ 
