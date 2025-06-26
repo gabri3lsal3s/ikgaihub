@@ -1,87 +1,45 @@
-# Arquitetura - IkigaiHub
+# 🏗️ Arquitetura - IkigaiHub
 
 ## 📋 Visão Geral
 
-O **IkigaiHub** é um PWA mobile-first desenvolvido com React 18, TypeScript e Supabase, seguindo uma arquitetura MVC (Model-View-Controller) com padrões modernos de desenvolvimento web.
+O IkigaiHub é um PWA (Progressive Web App) desenvolvido com uma arquitetura moderna e escalável, seguindo as melhores práticas de desenvolvimento web. Este documento detalha a arquitetura técnica do projeto.
 
-> **📊 Para status atual detalhado, consulte [RESUMO-EXECUTIVO.md](./RESUMO-EXECUTIVO.md)**
+**Versão**: v1.1.0
+**Última Atualização**: Janeiro 2025
 
 ---
 
-## 🏗️ Stack Tecnológica
+## 🏛️ Arquitetura Geral
 
-### **Frontend**
-- **Framework**: React 18 + TypeScript + Vite
-- **Styling**: Tailwind CSS com design system customizado
-- **Estado**: React Context API + Custom Hooks
-- **Roteamento**: React Router v6
-- **Formulários**: React Hook Form + Zod
-- **Notificações**: React Hot Toast
-- **Ícones**: Lucide React
-
-### **Backend**
-- **Plataforma**: Supabase (Auth + PostgreSQL + RLS)
-- **Autenticação**: Supabase Auth com JWT
+### **Padrão Arquitetural**
+- **Frontend**: Single Page Application (SPA)
+- **Backend**: Backend as a Service (BaaS) - Supabase
 - **Banco de Dados**: PostgreSQL com Row Level Security
-- **Storage**: Supabase Storage (quando necessário)
+- **PWA**: Service Worker + Manifest
 
-### **PWA**
-- **Service Worker**: Workbox
-- **Manifest**: Configuração completa
-- **Offline**: Funcionalidades básicas
-- **Instalação**: Adicionar à tela inicial
+### **Stack Tecnológica**
+```
+Frontend:
+├── React 18 (Framework)
+├── TypeScript (Tipagem)
+├── Vite (Build Tool)
+├── Tailwind CSS (Styling)
+├── React Router v6 (Roteamento)
+└── React Hot Toast (Notificações)
 
-### **Desenvolvimento**
-- **Linting**: ESLint + TypeScript ESLint
-- **Formatação**: Prettier
-- **Testes**: Vitest + Testing Library
-- **Build**: Vite
-- **Deploy**: Vercel/Netlify (planejado)
+Backend:
+├── Supabase (BaaS)
+├── PostgreSQL (Banco de Dados)
+├── Row Level Security (Segurança)
+├── JWT (Autenticação)
+└── Storage (Arquivos)
 
----
-
-## 🏛️ Padrão Arquitetural
-
-### **MVC (Model-View-Controller)**
-
-#### **Model (Modelo)**
-- **Services**: Camada de acesso a dados
-  - `RecipeService.ts` - Gerenciamento de receitas
-  - `ExerciseService.ts` - Gerenciamento de exercícios
-  - `GoalService.ts` - Gerenciamento de metas
-  - `AchievementService.ts` - Sistema de conquistas
-  - `ProgressService.ts` - Acompanhamento de progresso
-  - `ReminderService.ts` - Sistema de lembretes
-
-#### **View (Visualização)**
-- **Pages**: Páginas principais da aplicação
-  - `HomePage.tsx` - Dashboard principal
-  - `LoginPage.tsx` - Autenticação
-  - `ExercisePage.tsx` - Gestão de exercícios
-  - `GoalsPage.tsx` - Sistema de metas
-  - `MealPlanPage.tsx` - Plano alimentar
-
-- **Components**: Componentes reutilizáveis
-  - `dashboard/` - Componentes do dashboard
-  - `goals/` - Componentes de metas
-  - `Layout.tsx` - Layout principal
-  - `Header.tsx` - Cabeçalho
-  - `Sidebar.tsx` - Navegação lateral
-
-#### **Controller (Controlador)**
-- **Controllers**: Lógica de negócio
-  - `ExerciseController.ts` - Controle de exercícios
-  - `RecipeController.ts` - Controle de receitas
-
-- **Custom Hooks**: Gerenciamento de estado
-  - `useAuth.ts` - Autenticação
-  - `useDashboard.ts` - Dashboard
-  - `useExercises.ts` - Exercícios
-  - `useRecipes.ts` - Receitas
-  - `useGoals.ts` - Metas
-  - `useProgress.ts` - Progresso
-  - `useAchievements.ts` - Conquistas
-  - `useReminders.ts` - Lembretes
+PWA:
+├── VitePWA (Plugin)
+├── Workbox (Service Worker)
+├── Manifest (Configuração)
+└── Offline (Funcionalidades)
+```
 
 ---
 
@@ -89,107 +47,141 @@ O **IkigaiHub** é um PWA mobile-first desenvolvido com React 18, TypeScript e S
 
 ```
 src/
-├── components/           # Componentes React
-│   ├── dashboard/       # Componentes do dashboard
-│   ├── goals/          # Componentes de metas
+├── components/          # Componentes React
+│   ├── dashboard/       # Componentes do Dashboard
+│   ├── goals/          # Componentes de Metas
 │   └── ...             # Outros componentes
-├── contexts/           # Contextos React (AuthContext)
-├── controllers/        # Controladores (lógica de negócio)
-├── hooks/             # Custom hooks
-├── pages/             # Páginas da aplicação
-├── services/          # Serviços (acesso a dados)
-├── types/             # Tipos TypeScript
-├── utils/             # Utilitários
-├── styles/            # Estilos globais
-└── constants/         # Constantes da aplicação
+├── contexts/           # Contextos React
+├── hooks/              # Custom Hooks
+├── pages/              # Páginas da aplicação
+├── services/           # Serviços de API
+├── types/              # Definições TypeScript
+├── utils/              # Utilitários
+└── styles/             # Estilos globais
 ```
 
 ---
 
-## 🔐 Sistema de Autenticação
+## 🔧 Componentes Principais
 
-### **Arquitetura**
-- **Supabase Auth**: Autenticação JWT
-- **AuthContext**: Contexto global de autenticação
-- **ProtectedRoute**: Proteção de rotas
-- **useAuth Hook**: Gerenciamento de estado de autenticação
+### **1. Sistema de Autenticação**
+```typescript
+// contexts/AuthContext.tsx
+interface AuthContextType {
+  user: User | null;
+  loading: boolean;
+  signIn: (email: string, password: string) => Promise<void>;
+  signUp: (email: string, password: string) => Promise<void>;
+  signOut: () => Promise<void>;
+}
+```
 
-### **Fluxo**
-1. Usuário acessa aplicação
-2. Verificação de token JWT
-3. Redirecionamento para login se não autenticado
-4. Proteção de rotas privadas
-5. Logout com limpeza de sessão
+### **2. Dashboard Layout**
+```typescript
+// components/dashboard/DashboardLayout.tsx
+interface DashboardLayoutProps {
+  children: React.ReactNode;
+  title?: string;
+}
+```
+
+### **3. Sistema de Metas**
+```typescript
+// services/GoalService.ts
+interface Goal {
+  id: string;
+  user_id: string;
+  title: string;
+  description?: string;
+  type: 'exercise' | 'nutrition' | 'general';
+  target_value: number;
+  current_value: number;
+  unit: string;
+  deadline?: Date;
+  created_at: Date;
+  updated_at: Date;
+}
+```
 
 ---
 
 ## 🗄️ Banco de Dados
 
-### **Tabelas Principais**
+### **Schema Principal**
 
-#### **users** (Supabase Auth)
-- `id`: UUID (chave primária)
-- `email`: String
-- `created_at`: Timestamp
+#### **Tabela: users**
+```sql
+CREATE TABLE users (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  email TEXT UNIQUE NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
 
-#### **recipes**
-- `id`: UUID (chave primária)
-- `user_id`: UUID (chave estrangeira)
-- `name`: String
-- `ingredients`: Text[]
-- `instructions`: Text
-- `prep_time`: Integer
-- `calories`: Integer (opcional)
-- `meal_type`: Enum (café, lanche_manhã, almoço, lanche_tarde, jantar, ceia)
-- `is_preferred`: Boolean
-- `created_at`: Timestamp
-- `updated_at`: Timestamp
+#### **Tabela: goals**
+```sql
+CREATE TABLE goals (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  title TEXT NOT NULL,
+  description TEXT,
+  type TEXT NOT NULL CHECK (type IN ('exercise', 'nutrition', 'general')),
+  target_value NUMERIC NOT NULL,
+  current_value NUMERIC DEFAULT 0,
+  unit TEXT NOT NULL,
+  deadline DATE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
 
-#### **exercises**
-- `id`: UUID (chave primária)
-- `user_id`: UUID (chave estrangeira)
-- `name`: String
-- `description`: Text
-- `sets`: Integer
-- `reps`: Integer
-- `duration`: Integer (segundos)
-- `day_of_week`: Integer (0-6)
-- `created_at`: Timestamp
-- `updated_at`: Timestamp
+#### **Tabela: goal_progress**
+```sql
+CREATE TABLE goal_progress (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  goal_id UUID REFERENCES goals(id) ON DELETE CASCADE,
+  user_id UUID REFERENCES users(id) ON DELETE CASCADE,
+  value NUMERIC NOT NULL,
+  notes TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+```
 
-#### **goals**
-- `id`: UUID (chave primária)
-- `user_id`: UUID (chave estrangeira)
-- `title`: String
-- `description`: Text
-- `type`: Enum (exercise, nutrition, weight, frequency)
-- `target_value`: Numeric
-- `current_value`: Numeric
-- `start_date`: Date
-- `end_date`: Date
-- `status`: Enum (active, completed, abandoned)
-- `created_at`: Timestamp
+### **Políticas RLS**
+```sql
+-- Política para goals
+CREATE POLICY "Users can only access their own goals" ON goals
+  FOR ALL USING (auth.uid() = user_id);
 
-#### **goal_progress**
-- `id`: UUID (chave primária)
-- `goal_id`: UUID (chave estrangeira)
-- `value`: Numeric
-- `date`: Date
-- `notes`: Text
-- `created_at`: Timestamp
+-- Política para goal_progress
+CREATE POLICY "Users can only access their own goal progress" ON goal_progress
+  FOR ALL USING (auth.uid() = user_id);
+```
 
-#### **achievements**
-- `id`: UUID (chave primária)
-- `user_id`: UUID (chave estrangeira)
-- `title`: String
-- `description`: Text
-- `type`: String
-- `earned_at`: Timestamp
+---
 
-### **Políticas RLS (Row Level Security)**
-- Todas as tabelas têm RLS habilitado
-- Usuários só acessam seus próprios dados
-- Políticas baseadas em `user_id`
+## 🔐 Segurança
+
+### **Row Level Security (RLS)**
+- ✅ Todas as tabelas com RLS habilitado
+- ✅ Políticas configuradas corretamente
+- ✅ Usuários só acessam seus próprios dados
+- ✅ Validação de autenticação em todas as operações
+
+### **Autenticação**
+- **JWT Tokens**: Gerenciados pelo Supabase
+- **Refresh Tokens**: Renovação automática
+- **Proteção de Rotas**: Componente ProtectedRoute
+- **Contexto Global**: AuthContext para estado de autenticação
+
+### **Validação de Dados**
+```typescript
+// Exemplo de validação no frontend
+const validateGoal = (goal: Partial<Goal>): boolean => {
+  return !!(goal.title && goal.type && goal.target_value && goal.unit);
+};
+```
 
 ---
 
@@ -197,79 +189,139 @@ src/
 
 ### **Cores**
 ```css
-/* Cores principais */
---ikigai-green: #059669
---ikigai-black: #1F2937
-
-/* Sistema de cinzas */
---gray-50: #F9FAFB
---gray-100: #F3F4F6
---gray-200: #E5E7EB
---gray-300: #D1D5DB
---gray-400: #9CA3AF
---gray-500: #6B7280
---gray-600: #4B5563
---gray-700: #374151
---gray-800: #1F2937
---gray-900: #111827
+:root {
+  --primary: #10b981;      /* Verde Ikigai */
+  --primary-dark: #059669;
+  --secondary: #f59e0b;    /* Laranja */
+  --accent: #3b82f6;       /* Azul */
+  --success: #10b981;      /* Verde */
+  --warning: #f59e0b;      /* Amarelo */
+  --error: #ef4444;        /* Vermelho */
+  --gray-50: #f9fafb;
+  --gray-100: #f3f4f6;
+  --gray-900: #111827;
+}
 ```
 
 ### **Tipografia**
-- **Família**: Inter (padrão do Tailwind)
-- **Tamanhos**: Sistema de escala do Tailwind
-- **Pesos**: 400 (normal), 500 (medium), 600 (semibold), 700 (bold)
+```css
+.font-display { font-family: 'Inter', sans-serif; }
+.font-body { font-family: 'Inter', sans-serif; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-base { font-size: 1rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+```
 
-### **Componentes Padronizados**
-- **Botões**: Primário, secundário, outline
-- **Campos**: Input, textarea, select
-- **Cards**: Com sombras e bordas consistentes
-- **Modais**: Overlay com backdrop
-- **Notificações**: Toast notifications
+### **Componentes Base**
+- **Button**: Botões primários, secundários e terciários
+- **Card**: Containers com sombra e bordas arredondadas
+- **Input**: Campos de entrada com validação
+- **Modal**: Diálogos modais responsivos
+- **Badge**: Indicadores de status
 
 ---
 
-## 🔄 Fluxo de Dados
+## 📱 PWA (Progressive Web App)
 
-### **Padrão de Comunicação**
-```
-Component → Hook → Service → Supabase → Database
-     ↑                                    ↓
-     ←────────── Response ←───────────────←
+### **Service Worker**
+```typescript
+// Configuração do VitePWA
+export default defineConfig({
+  plugins: [
+    VitePWA({
+      registerType: 'autoUpdate',
+      workbox: {
+        globPatterns: ['**/*.{js,css,html,ico,png,svg}'],
+        runtimeCaching: [
+          {
+            urlPattern: /^https:\/\/api\.supabase\.co\/.*$/,
+            handler: 'NetworkFirst',
+            options: {
+              cacheName: 'api-cache',
+              expiration: {
+                maxEntries: 100,
+                maxAgeSeconds: 60 * 60 * 24 // 24 horas
+              }
+            }
+          }
+        ]
+      }
+    })
+  ]
+});
 ```
 
-### **Exemplo: Carregamento de Receitas**
-1. `RecipePage` chama `useRecipes()`
-2. `useRecipes` chama `RecipeService.getRecipes()`
-3. `RecipeService` faz query no Supabase
-4. Dados retornam pela mesma cadeia
-5. Componente re-renderiza com novos dados
+### **Manifest**
+```json
+{
+  "name": "IkigaiHub",
+  "short_name": "IkigaiHub",
+  "description": "Gestão completa de saúde",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
+```
 
 ---
 
-## 🧪 Testes
+## 🔄 Estado da Aplicação
 
-### **Estrutura de Testes**
-- **Framework**: Vitest
-- **Testing Library**: React Testing Library
-- **Cobertura**: Jest Coverage
-- **Setup**: `src/test/setup.ts`
+### **Gerenciamento de Estado**
+- **React Context**: Para estado global (autenticação)
+- **Custom Hooks**: Para lógica de negócio
+- **Local State**: Para estado de componentes
+- **Supabase**: Para persistência de dados
 
-### **Tipos de Testes**
-- **Unitários**: Funções isoladas
-- **Integração**: Componentes + hooks
-- **E2E**: Fluxos completos (planejado)
+### **Fluxo de Dados**
+```
+User Action → Component → Hook → Service → Supabase → Database
+     ↑                                                      ↓
+     ←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←←
+```
+
+### **Custom Hooks**
+```typescript
+// hooks/useGoals.ts
+const useGoals = () => {
+  const [goals, setGoals] = useState<Goal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const createGoal = async (goalData: CreateGoalData) => {
+    // Lógica de criação
+  };
+
+  const updateGoal = async (id: string, updates: Partial<Goal>) => {
+    // Lógica de atualização
+  };
+
+  return { goals, loading, error, createGoal, updateGoal };
+};
+```
 
 ---
 
 ## 🚀 Performance
 
 ### **Otimizações Implementadas**
-- **Code Splitting**: Lazy loading de páginas
-- **Memoização**: React.memo e useMemo
-- **Bundle Size**: Tree shaking automático
-- **Images**: Otimização automática
+- **Code Splitting**: Lazy loading de componentes
+- **Bundle Optimization**: Vite para build otimizado
+- **Caching**: Service Worker para cache inteligente
+- **Image Optimization**: Lazy loading de imagens
+- **Tree Shaking**: Remoção de código não utilizado
 
-### **Métricas Alvo**
+### **Métricas de Performance**
 - **First Contentful Paint**: < 1.5s
 - **Largest Contentful Paint**: < 2.5s
 - **Cumulative Layout Shift**: < 0.1
@@ -277,138 +329,107 @@ Component → Hook → Service → Supabase → Database
 
 ---
 
-## 🔒 Segurança
+## 🧪 Testes
 
-### **Medidas Implementadas**
-- **Row Level Security**: Todas as tabelas
-- **JWT Tokens**: Autenticação segura
-- **Input Validation**: Zod schemas
-- **XSS Protection**: React sanitization
-- **CSRF Protection**: Supabase built-in
+### **Estrutura de Testes**
+```
+tests/
+├── unit/           # Testes unitários
+├── integration/    # Testes de integração
+├── e2e/           # Testes end-to-end
+└── setup.ts       # Configuração
+```
 
-### **Boas Práticas**
-- Validação de entrada em todos os formulários
-- Sanitização de dados antes de exibição
-- Controle de acesso baseado em usuário
-- Logs de auditoria (planejado)
-
----
-
-## 📱 PWA (Progressive Web App)
-
-### **Funcionalidades**
-- **Service Worker**: Cache inteligente
-- **Manifest**: Instalação na tela inicial
-- **Offline**: Funcionalidades básicas
-- **Push Notifications**: Planejado
-
-### **Assets PWA**
-- Ícones em múltiplos tamanhos
-- Splash screens
-- Theme colors
-- Display modes
+### **Ferramentas**
+- **Vitest**: Framework de testes
+- **React Testing Library**: Testes de componentes
+- **MSW**: Mock Service Worker para APIs
+- **Playwright**: Testes E2E (planejado)
 
 ---
 
-## 🔧 Configuração de Ambiente
+## 🔧 Configuração de Desenvolvimento
 
 ### **Variáveis de Ambiente**
 ```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
+# .env.example
+VITE_SUPABASE_URL=your_supabase_url
+VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
+VITE_APP_VERSION=1.1.0
+VITE_APP_NAME=IkigaiHub
 ```
 
-### **Scripts Disponíveis**
+### **Scripts NPM**
 ```json
 {
-  "dev": "vite",
-  "build": "tsc && vite build",
-  "preview": "vite preview",
-  "lint": "eslint . --ext ts,tsx",
-  "lint:fix": "eslint . --ext ts,tsx --fix",
-  "test": "vitest",
-  "test:coverage": "vitest --coverage"
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "test": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0"
+  }
 }
 ```
 
 ---
 
-## 📈 Escalabilidade
+## 📊 Monitoramento
 
-### **Arquitetura Escalável**
-- **Microservices Ready**: Separação clara de responsabilidades
-- **Database Scaling**: Supabase auto-scaling
-- **CDN**: Assets otimizados
-- **Caching**: Service Worker + Supabase cache
+### **Logs e Erros**
+- **Console Logs**: Reduzidos para produção
+- **Error Boundaries**: Captura de erros React
+- **Supabase Logs**: Monitoramento de queries
+- **Performance Monitoring**: Métricas de performance
 
-### **Próximos Passos**
-- **API Gateway**: Para múltiplos serviços
-- **Load Balancing**: Distribuição de carga
-- **Monitoring**: Logs e métricas
-- **CI/CD**: Pipeline automatizado
-
----
-
-## 🔗 Links Relacionados
-
-- [PRD](./PRD.md) - Documento de Requisitos do Produto
-- [Roadmap](./ROADMAP.md) - Cronograma de Desenvolvimento
-- [Resumo Executivo](./RESUMO-EXECUTIVO.md) - Status Atual
-- [CHANGELOG](../../CHANGELOG.md) - Histórico de Mudanças
+### **Analytics (Planejado)**
+- **Google Analytics**: Tracking de usuários
+- **Supabase Analytics**: Métricas de uso
+- **Error Tracking**: Sentry ou similar
 
 ---
 
-## 🎯 Sistema de Metas: Arquitetura e Integração
+## 🔄 Deploy e CI/CD
 
-O sistema de metas é um dos pilares do IkigaiHub, integrando frontend, backend e gamificação. Veja como ele se encaixa na arquitetura geral:
+### **Ambientes**
+- **Development**: Local com Vite dev server
+- **Staging**: Vercel/Netlify preview
+- **Production**: Vercel/Netlify (planejado)
 
-### **1. Estrutura Técnica**
-- **Banco de Dados:**
-  - Tabelas: `goals`, `goal_progress`, `achievements`
-  - Triggers: Atualização automática de status e conquistas
-  - RLS: Segurança por usuário
-- **Serviços:**
-  - `GoalService.ts`: CRUD de metas, progresso, estatísticas
-  - `AchievementService.ts`: Conquistas e pontos
-  - `NotificationService.ts`: Notificações de progresso, conclusão e prazos
-- **Hooks:**
-  - `useGoals.ts`: Gerenciamento de metas e progresso
-  - `useNotifications.ts`: Notificações automáticas de prazos
-- **Componentes:**
-  - `GoalCard`, `GoalForm`, `GoalProgress`, `GoalAchievements`, `GoalStats`
-
-### **2. Fluxo de Dados e Integração**
-
-```mermaid
-flowchart TD
-  User[Usuário] -- CRUD --> GoalForm
-  GoalForm -- chama --> useGoals
-  useGoals -- usa --> GoalService
-  GoalService -- acessa --> Supabase[(Supabase DB)]
-  GoalService -- triggers --> Triggers[Triggers SQL]
-  Triggers -- atualiza --> goals/goal_progress/achievements
-  useGoals -- atualiza --> GoalCard/GoalProgress
-  GoalCard -- ação --> GoalProgress
-  GoalProgress -- consulta --> GoalService
-  GoalCard -- ação --> NotificationService
-  NotificationService -- mostra --> Toast[Notificações]
-  GoalAchievements -- consulta --> AchievementService
-  GoalStats -- consulta --> GoalService
+### **Pipeline (Planejado)**
+```
+Code Push → GitHub Actions → Build → Test → Deploy → Monitor
 ```
 
-### **3. Principais Pontos de Manutenção**
-- **Adicionar novo tipo de meta:**
-  - Atualizar enum/type em banco, tipos TS e formulários.
-- **Alterar lógica de progresso:**
-  - Ajustar triggers SQL e métodos do GoalService.
-- **Novas conquistas/gamificação:**
-  - Adicionar lógica no AchievementService e triggers.
-- **Notificações customizadas:**
-  - Expandir NotificationService e hooks.
+---
 
-### **4. Segurança e Boas Práticas**
-- RLS garante que cada usuário só veja/edite suas metas.
-- Triggers mantêm integridade do progresso e conquistas.
-- Hooks isolam lógica de estado e facilitam testes.
+## 🎯 Próximas Melhorias
+
+### **Curto Prazo**
+- [ ] Otimizações de performance
+- [ ] Testes automatizados
+- [ ] Deploy em produção
+
+### **Médio Prazo**
+- [ ] Analytics e monitoramento
+- [ ] PWA avançado
+- [ ] Integrações externas
+
+### **Longo Prazo**
+- [ ] Microserviços
+- [ ] Cache distribuído
+- [ ] Escalabilidade horizontal
 
 ---
+
+## 📚 Documentação Relacionada
+
+- [Resumo Executivo](./RESUMO-EXECUTIVO.md)
+- [Roadmap](./ROADMAP.md)
+- [PRD](./PRD.md)
+- [Instruções de Manutenção](../instrucoes/)
+
+---
+
+*Última atualização: Janeiro 2025 - v1.1.0*

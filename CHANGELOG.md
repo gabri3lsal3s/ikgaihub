@@ -1,201 +1,234 @@
-# Changelog
+# 📝 Changelog - IkigaiHub
 
 Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
-e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
-
-## [1.0.0] - 2024-12-XX
-
-### 🎉 Lançamento Inicial
-Versão inicial do IkigaiHub com funcionalidades core implementadas.
-
-### ✅ Adicionado
-- **Sistema de Autenticação Completo**
-  - Login/logout com Supabase Auth
-  - Proteção de rotas com ProtectedRoute
-  - Contexto global de autenticação (AuthContext)
-  - Hook useAuth para gerenciamento de estado
-  - Redirecionamento automático para usuários não autenticados
-
-- **Gestão de Receitas**
-  - CRUD completo de receitas
-  - 6 tipos de refeição configuráveis (café, lanche manhã, almoço, lanche tarde, jantar, ceia)
-  - Sistema de preferências (1 receita preferida por refeição)
-  - Seção de receitas extras sem limite
-  - Validação de limites (máximo 4 receitas por refeição)
-  - Interface responsiva e mobile-first
-
-- **Gestão de Exercícios**
-  - CRUD completo de exercícios
-  - Organização por dia da semana
-  - Sistema de reordenação funcional
-  - Campos: nome, descrição, séries, repetições, duração
-  - Interface dark mode completa
-
-- **Dashboard Inteligente**
-  - Hook useDashboard para carregamento otimizado de dados
-  - Componentes especializados:
-    - TodayExercises: Exercícios do dia atual
-    - NextMeal: Próxima refeição baseada no horário
-    - QuickStats: Estatísticas rápidas
-    - ProgressStats: Estatísticas de progresso
-    - NutritionStats: Estatísticas de nutrição
-    - ExerciseStats: Estatísticas de exercícios
-  - Sistema de conclusão de atividades
-  - Gráficos de pizza para visualização de dados
-  - Interface em português
-
-- **Arquitetura Base**
-  - Estrutura MVC bem definida
-  - Services especializados (RecipeService, ExerciseService)
-  - Controllers para lógica de negócio
-  - Custom hooks para gerenciamento de estado
-  - Tipos TypeScript completos
-  - Configuração de testes com Vitest
-
-- **Configuração Técnica**
-  - React 18 + TypeScript + Vite
-  - Tailwind CSS com design system customizado
-  - Supabase como backend (Auth + PostgreSQL + RLS)
-  - React Router v6 para navegação
-  - React Hot Toast para notificações
-  - ESLint e Prettier configurados
-  - PWA assets configurados
-
-### 🔧 Melhorado
-- **Performance**: Carregamento otimizado de dados
-- **UX**: Interface mobile-first responsiva
-- **Segurança**: Row Level Security (RLS) configurado
-- **Código**: Arquitetura limpa e escalável
-
-### 🐛 Corrigido
-- Validações de formulários
-- Tratamento de erros de autenticação
-- Sincronização de dados entre dispositivos
+e este projeto adere ao [Semantic Versioning](https://semver.org/lang/pt-BR/).
 
 ---
 
-## [0.9.0] - 2024-12-XX
+## [1.1.0] - 2025-01-XX
 
 ### ✅ Adicionado
-- **Sistema de Metas (60% implementado)**
-  - Estrutura de banco de dados (tabelas: goals, goal_progress, achievements)
-  - Tipos de metas: exercício, nutrição, peso, frequência
-  - Políticas RLS configuradas
-  - Componentes básicos: GoalCard, GoalForm, GoalsPage
-  - Serviços: GoalService, AchievementService
-  - Hooks: useGoals, useAchievements
+- Sistema de lembretes completo
+- Widget de lembretes no dashboard
+- Interface de gerenciamento de lembretes
+- Sistema de gamificação avançado
+- Badges e conquistas
+- Streaks de consistência
+- Pontuação por atividades
+- Níveis de usuário
+- Desafios semanais/mensais
 
-### 🔧 Melhorado
-- **Estatísticas**: Separação em componentes especializados
-- **Interface**: Gráficos de pizza mais intuitivos
-- **Localização**: Nomes em português
+### 🔧 Corrigido
+- **Erro RLS na criação de metas**: Adicionado `user_id` automaticamente no GoalService
+- **Múltiplos registros do Service Worker**: Corrigido hook usePWA para evitar registros duplicados
+- **Console poluído**: Reduzidos logs excessivos e warnings desnecessários
+- **Interface de lembretes confusa**: Simplificada para um único botão de ação
+- **Ícones PWA faltando**: Corrigidos para usar arquivos existentes
+- **Warnings do React Router**: Adicionadas future flags recomendadas
+- **Logs de debug desnecessários**: Removidos do GoalService
+
+### 🚀 Melhorado
+- Performance do PWA
+- Experiência do usuário
+- Código limpo e organizado
+- Documentação atualizada
+- Configuração do VitePWA otimizada
+
+### 📚 Documentação
+- Atualizado RESUMO-EXECUTIVO.md
+- Atualizado ROADMAP.md
+- Atualizado ARQUITETURA.md
+- Atualizado PRD.md
+- Documentação de correções implementadas
+
+---
+
+## [1.0.0] - 2025-01-XX
+
+### ✅ Adicionado
+- PWA completo com funcionalidades offline
+- Service Worker configurado com Workbox
+- Manifest.json completo com shortcuts
+- Ícones e splash screens
+- Cache inteligente
+- Instalação na tela inicial
+- Sincronização offline/online
+- Push notifications
+- Background sync
+
+### 🚀 Melhorado
+- Performance geral da aplicação
+- Experiência offline
+- Caching de recursos
+- Carregamento de páginas
+
+---
+
+## [0.9.0] - 2025-01-XX
+
+### ✅ Adicionado
+- Sistema de metas completo
+- Criação e gerenciamento de metas
+- Tipos de metas: exercício, nutrição, geral
+- Progresso visual com barras de progresso
+- Sistema de conquistas e badges
+- Notificações de progresso
+- Histórico de metas concluídas
+- Integração com exercícios e receitas
+- Relatórios de progresso
+- Gamificação básica
+
+### 🚀 Melhorado
+- Dashboard com estatísticas de metas
+- Interface de criação de metas
+- Visualização de progresso
+- Sistema de notificações
 
 ---
 
 ## [0.8.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Dashboard Avançado**
-  - Componentes especializados para estatísticas
-  - Sistema de conclusão de atividades
-  - Gráficos de progresso
+- Componente NutritionStats especializado
+- Componente ExerciseStats especializado
+- QuickStats atualizado com mais informações
+- HomePage com layout otimizado
+- Estatísticas detalhadas de nutrição
+- Estatísticas detalhadas de exercícios
 
-### 🔧 Melhorado
-- **Layout**: Dashboard responsivo
-- **Performance**: Carregamento otimizado
+### 🚀 Melhorado
+- Performance das estatísticas
+- Layout responsivo
+- Experiência do usuário
 
 ---
 
 ## [0.7.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Dashboard Inteligente**
-  - Hook useDashboard
-  - Componentes de estatísticas
-  - Lógica baseada em horário
+- Dashboard inteligente completo
+- Hook useDashboard para carregamento de dados
+- Componentes: TodayExercises, NextMeal, QuickStats, ProgressStats
+- Sistema de conclusão de exercícios e receitas
+- Estatísticas básicas e gráficos
+- Tratamento de erros e loading states
+- Layout responsivo com DashboardLayout
+
+### 🚀 Melhorado
+- Performance do carregamento de dados
+- Interface do dashboard
+- Experiência do usuário
 
 ---
 
 ## [0.6.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Gestão de Exercícios**
-  - CRUD completo
-  - Organização por dia da semana
-  - Interface responsiva
+- Gerenciamento completo de exercícios
+- CRUD de exercícios
+- Agendamento semanal
+- Configuração de séries e repetições
+- Duração e intensidade
+- Categorização por grupos musculares
+- Interface responsiva para exercícios
+
+### 🚀 Melhorado
+- Interface de exercícios
+- Validações de formulários
+- Tratamento de erros
 
 ---
 
 ## [0.5.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Gestão de Receitas**
-  - CRUD completo
-  - Sistema de preferências
-  - 6 tipos de refeição
+- Gerenciamento completo de receitas
+- CRUD de receitas
+- Categorização por tipo de refeição
+- Informações nutricionais
+- Tempo de preparo
+- Lista de ingredientes e instruções
+- Marcação de receitas preferidas
+- Interface responsiva para receitas
+
+### 🚀 Melhorado
+- Interface de receitas
+- Validações de formulários
+- Tratamento de erros
 
 ---
 
 ## [0.4.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Sistema de Autenticação**
-  - Login/logout
-  - Proteção de rotas
-  - Contexto de autenticação
+- Sistema de autenticação completo
+- Login/registro com Supabase Auth
+- Proteção de rotas com ProtectedRoute
+- Contexto de autenticação (AuthContext)
+- Páginas de login e registro
+- Hook useAuth separado para melhor performance
+- Tratamento de erros de autenticação
+
+### 🚀 Melhorado
+- Segurança da aplicação
+- Experiência de autenticação
+- Tratamento de erros
 
 ---
 
 ## [0.3.0] - 2024-12-XX
 
 ### ✅ Adicionado
-- **Configuração Base**
-  - React + TypeScript + Vite
-  - Tailwind CSS
-  - Supabase
-  - Estrutura de pastas
+- Configuração inicial do projeto
+- React 18 + TypeScript + Vite
+- Tailwind CSS com design system
+- ESLint e Prettier configurados
+- Setup do Supabase
+- Configuração de testes com Vitest
+- Assets PWA configurados
+- Estrutura de pastas organizada
+
+### 🚀 Melhorado
+- Base sólida para o projeto
+- Configuração de desenvolvimento
+- Estrutura de código
 
 ---
 
-## [0.2.0] - 2024-12-XX
+## [0.2.0] - 2024-11-XX
 
 ### ✅ Adicionado
-- **Setup Inicial**
-  - Configuração do projeto
-  - Dependências básicas
-  - Estrutura inicial
+- Conceito inicial do projeto
+- Definição de arquitetura
+- Planejamento de funcionalidades
+- Documentação inicial
 
 ---
 
-## [0.1.0] - 2024-12-XX
+## [0.1.0] - 2024-11-XX
 
 ### ✅ Adicionado
-- **Conceito Inicial**
-  - Definição do projeto
-  - Planejamento de arquitetura
-  - Documentação inicial
+- Início do projeto
+- Definição do conceito IkigaiHub
+- Planejamento inicial
 
 ---
 
 ## Tipos de Mudanças
 
 - `✅ Adicionado` para novas funcionalidades
-- `🔧 Melhorado` para mudanças em funcionalidades existentes
-- `🐛 Corrigido` para correções de bugs
-- `🚀 Performance` para melhorias de performance
-- `🔒 Segurança` para mudanças relacionadas à segurança
+- `🚀 Melhorado` para melhorias em funcionalidades existentes
+- `🔧 Corrigido` para correções de bugs
 - `📚 Documentação` para mudanças na documentação
+- `⚡ Performance` para melhorias de performance
+- `🔒 Segurança` para correções de segurança
 - `🧪 Testes` para adição ou correção de testes
-- `♻️ Refatoração` para mudanças que não corrigem bugs nem adicionam funcionalidades
-- `⚡ Breaking` para mudanças que quebram compatibilidade
+- `♻️ Refatorado` para refatorações de código
+- `🗑️ Removido` para funcionalidades removidas
+- `🚨 Breaking` para mudanças que quebram compatibilidade
 
 ---
 
-## Links
-
-- [PRD](./docs/projeto/PRD.md) - Documento de Requisitos do Produto
-- [Arquitetura](./docs/projeto/ARQUITETURA.md) - Documentação de Arquitetura
-- [Roadmap](./docs/projeto/ROADMAP.md) - Cronograma de Desenvolvimento
-- [Resumo Executivo](./docs/projeto/RESUMO-EXECUTIVO.md) - Status Atual do Projeto 
+*Última atualização: Janeiro 2025 - v1.1.0* 
