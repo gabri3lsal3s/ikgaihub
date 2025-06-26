@@ -92,7 +92,7 @@ CREATE OR REPLACE FUNCTION generate_recurring_schedules()
 RETURNS void AS $$
 DECLARE
     reminder_record RECORD;
-    current_date DATE;
+    base_date DATE;
     schedule_date DATE;
     days_ahead INTEGER;
 BEGIN
@@ -103,11 +103,11 @@ BEGIN
         AND is_active = true 
         AND target_date <= CURRENT_DATE + INTERVAL '30 days'
     LOOP
-        current_date := reminder_record.target_date;
+        base_date := reminder_record.target_date;
         
         -- Gerar agendamentos para os próximos 30 dias
         FOR days_ahead IN 0..30 LOOP
-            schedule_date := current_date + (days_ahead || ' days')::INTERVAL;
+            schedule_date := base_date + (days_ahead || ' days')::INTERVAL;
             
             -- Verificar se é um dia válido para o padrão de recorrência
             IF reminder_record.recurrence_pattern = 'daily' THEN

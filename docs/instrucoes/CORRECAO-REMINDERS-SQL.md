@@ -4,9 +4,11 @@
 
 O erro `ERROR: 42703: column "target_date" does not exist` ocorre porque a tabela `reminders` já existe com a estrutura antiga, mas o código está tentando acessar colunas que não existem.
 
+**Erro adicional corrigido**: `ERROR: 42601: syntax error at or near "current_date"` - variável com nome reservado no PostgreSQL.
+
 ## ✅ Solução
 
-### Passo 1: Executar o Script de Migração
+### Passo 1: Executar o Script de Migração Corrigido
 
 Execute o script `docs/sql/setup-reminders-complete.sql` no Supabase SQL Editor:
 
@@ -16,6 +18,11 @@ Execute o script `docs/sql/setup-reminders-complete.sql` no Supabase SQL Editor:
 4. Copie todo o conteúdo
 5. Cole no SQL Editor do Supabase
 6. Clique em **Run** para executar
+
+**✅ Correções aplicadas:**
+- Migração da tabela `reminders` existente
+- Correção do erro de sintaxe na função `generate_recurring_schedules`
+- Criação das novas tabelas necessárias
 
 ### Passo 2: Verificar a Migração
 
@@ -33,6 +40,11 @@ SELECT table_name
 FROM information_schema.tables 
 WHERE table_schema = 'public' 
 AND table_name IN ('reminder_schedules', 'notification_settings', 'notification_history');
+
+-- Verificar se a função foi criada corretamente
+SELECT routine_name, routine_type 
+FROM information_schema.routines 
+WHERE routine_name = 'generate_recurring_schedules';
 ```
 
 ### Passo 3: Testar o Sistema
@@ -63,7 +75,7 @@ Após a migração, teste o sistema de lembretes:
 - Triggers para atualização automática
 
 ### 4. **Funções e Dados Iniciais**
-- Função para gerar agendamentos recorrentes
+- Função para gerar agendamentos recorrentes (corrigida)
 - Configurações padrão de notificação
 - Comentários e documentação
 
@@ -98,6 +110,7 @@ Após a migração, teste o sistema de lembretes:
 - **Segurança**: Todas as políticas RLS são recriadas
 - **Performance**: Índices são otimizados
 - **Compatibilidade**: Dados antigos são migrados automaticamente
+- **Correções**: Erros de sintaxe foram corrigidos
 
 ## 🚀 Após a Migração
 
@@ -122,6 +135,16 @@ Se encontrar algum problema durante a migração:
 2. Confirme se todas as tabelas foram criadas
 3. Teste as políticas RLS
 4. Verifique se os dados foram migrados corretamente
+5. Confirme se a função `generate_recurring_schedules` foi criada
+
+## 🔧 Correções Aplicadas
+
+### Erro de Sintaxe Corrigido
+- **Problema**: `current_date` é palavra reservada no PostgreSQL
+- **Solução**: Renomeado para `base_date` na função `generate_recurring_schedules`
+- **Arquivos corrigidos**: 
+  - `docs/sql/setup-reminders-complete.sql`
+  - `docs/sql/reminder-system.sql`
 
 ---
 

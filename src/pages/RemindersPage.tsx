@@ -146,26 +146,26 @@ const RemindersPage: React.FC = () => {
     const isOverdue = reminder.schedules?.some((s: any) => !s.is_sent && new Date(s.scheduled_time) < new Date());
 
     return (
-      <div key={reminder.id} className={`bg-white rounded-lg shadow-md p-4 border-l-4 ${
-        isOverdue ? 'border-red-500' : 'border-blue-500'
+      <div key={reminder.id} className={`card p-4 border-l-4 ${
+        isOverdue ? 'border-red-500' : 'border-ikigai-green'
       }`}>
         <div className="flex items-start justify-between">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-2">
               <span className="text-2xl">{icon}</span>
-              <h3 className="font-semibold text-gray-900">{reminder.title}</h3>
+              <h3 className="font-semibold text-gray-900 dark:text-white">{reminder.title}</h3>
               {reminder.is_recurring && (
-                <span className="px-2 py-1 text-xs bg-blue-100 text-blue-800 rounded-full">
+                <span className="px-2 py-1 text-xs bg-ikigai-green/10 text-ikigai-green rounded-full">
                   Recorrente
                 </span>
               )}
             </div>
             
             {reminder.description && (
-              <p className="text-gray-600 text-sm mb-2">{reminder.description}</p>
+              <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">{reminder.description}</p>
             )}
             
-            <div className="flex items-center gap-4 text-sm text-gray-500">
+            <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
               <div className="flex items-center gap-1">
                 <Calendar className="w-4 h-4" />
                 {formattedDateTime}
@@ -185,8 +185,8 @@ const RemindersPage: React.FC = () => {
               onClick={() => handleToggleActive(reminder.id, !reminder.is_active)}
               className={`p-2 rounded-full ${
                 reminder.is_active 
-                  ? 'bg-green-100 text-green-600 hover:bg-green-200' 
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  ? 'bg-ikigai-green/10 text-ikigai-green hover:bg-ikigai-green/20' 
+                  : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-gray-600'
               }`}
             >
               {reminder.is_active ? <CheckCircle className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
@@ -194,14 +194,14 @@ const RemindersPage: React.FC = () => {
             
             <button
               onClick={() => handleEdit(reminder)}
-              className="p-2 text-blue-600 hover:bg-blue-100 rounded-full"
+              className="p-2 text-ikigai-green hover:bg-ikigai-green/10 rounded-full"
             >
               <Edit className="w-4 h-4" />
             </button>
             
             <button
               onClick={() => handleDelete(reminder.id)}
-              className="p-2 text-red-600 hover:bg-red-100 rounded-full"
+              className="p-2 text-red-600 hover:bg-red-100 dark:hover:bg-red-900/20 rounded-full"
             >
               <Trash2 className="w-4 h-4" />
             </button>
@@ -212,15 +212,15 @@ const RemindersPage: React.FC = () => {
   };
 
   const renderForm = () => (
-    <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-      <h2 className="text-xl font-semibold mb-4">
+    <div className="card p-6 mb-6">
+      <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
         {editingReminder ? 'Editar Lembrete' : 'Novo Lembrete'}
       </h2>
       
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Título *
             </label>
             <input
@@ -229,19 +229,19 @@ const RemindersPage: React.FC = () => {
               value={formData.title}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Tipo
             </label>
             <select
               name="reminder_type"
               value={formData.reminder_type}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
             >
               <option value="custom">Personalizado</option>
               <option value="meal">Refeição</option>
@@ -252,7 +252,7 @@ const RemindersPage: React.FC = () => {
         </div>
         
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
+          <label className="label">
             Descrição
           </label>
           <textarea
@@ -260,13 +260,13 @@ const RemindersPage: React.FC = () => {
             value={formData.description}
             onChange={handleInputChange}
             rows={3}
-            className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="input"
           />
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Data *
             </label>
             <input
@@ -275,12 +275,12 @@ const RemindersPage: React.FC = () => {
               value={formData.target_date}
               onChange={handleInputChange}
               required
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
             />
           </div>
           
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">
+            <label className="label">
               Horário
             </label>
             <input
@@ -288,7 +288,7 @@ const RemindersPage: React.FC = () => {
               name="target_time"
               value={formData.target_time}
               onChange={handleInputChange}
-              className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="input"
             />
           </div>
           
@@ -301,12 +301,12 @@ const RemindersPage: React.FC = () => {
                 onChange={handleInputChange}
                 className="mr-2"
               />
-              <span className="text-sm text-gray-700">Notificação</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">Notificação</span>
             </label>
           </div>
         </div>
         
-        <div className="border-t pt-4">
+        <div className="border-t border-gray-200 dark:border-gray-700 pt-4">
           <label className="flex items-center mb-4">
             <input
               type="checkbox"
@@ -315,20 +315,20 @@ const RemindersPage: React.FC = () => {
               onChange={handleInputChange}
               className="mr-2"
             />
-            <span className="text-sm font-medium text-gray-700">Lembrete recorrente</span>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Lembrete recorrente</span>
           </label>
           
           {formData.is_recurring && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">
+                <label className="label">
                   Padrão de recorrência
                 </label>
                 <select
                   name="recurrence_pattern"
                   value={formData.recurrence_pattern}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="input"
                 >
                   <option value="daily">Diário</option>
                   <option value="weekly">Semanal</option>
@@ -338,7 +338,7 @@ const RemindersPage: React.FC = () => {
               
               {formData.recurrence_pattern === 'weekly' && (
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="label">
                     Dias da semana
                   </label>
                   <div className="flex flex-wrap gap-2">
@@ -355,7 +355,7 @@ const RemindersPage: React.FC = () => {
                           }}
                           className="mr-1"
                         />
-                        <span className="text-sm">{day}</span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">{day}</span>
                       </label>
                     ))}
                   </div>
@@ -365,20 +365,20 @@ const RemindersPage: React.FC = () => {
           )}
         </div>
         
-        <div className="flex justify-end gap-3 pt-4 border-t">
+        <div className="flex justify-end gap-3 pt-4 border-t border-gray-200 dark:border-gray-700">
           <button
             type="button"
             onClick={() => {
               setShowForm(false);
               resetForm();
             }}
-            className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+            className="btn btn-outline"
           >
             Cancelar
           </button>
           <button
             type="submit"
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="btn btn-primary"
           >
             {editingReminder ? 'Atualizar' : 'Criar'} Lembrete
           </button>
@@ -392,25 +392,25 @@ const RemindersPage: React.FC = () => {
 
     return (
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-6">
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <div className="text-2xl font-bold text-blue-600">{stats.total_reminders}</div>
-          <div className="text-sm text-gray-600">Total</div>
+        <div className="card p-4 text-center">
+          <div className="text-2xl font-bold text-ikigai-green">{stats.total_reminders}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Total</div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <div className="text-2xl font-bold text-green-600">{stats.active_reminders}</div>
-          <div className="text-sm text-gray-600">Ativos</div>
+        <div className="card p-4 text-center">
+          <div className="text-2xl font-bold text-ikigai-green-dark">{stats.active_reminders}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Ativos</div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <div className="text-2xl font-bold text-orange-600">{stats.today_reminders}</div>
-          <div className="text-sm text-gray-600">Hoje</div>
+        <div className="card p-4 text-center">
+          <div className="text-2xl font-bold text-ikigai-black">{stats.today_reminders}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Hoje</div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <div className="text-2xl font-bold text-purple-600">{stats.upcoming_reminders}</div>
-          <div className="text-sm text-gray-600">Próximos</div>
+        <div className="card p-4 text-center">
+          <div className="text-2xl font-bold text-ikigai-black-dark">{stats.upcoming_reminders}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Próximos</div>
         </div>
-        <div className="bg-white rounded-lg shadow-md p-4 text-center">
-          <div className="text-2xl font-bold text-gray-600">{stats.completed_today}</div>
-          <div className="text-sm text-gray-600">Concluídos</div>
+        <div className="card p-4 text-center">
+          <div className="text-2xl font-bold text-gray-600 dark:text-gray-400">{stats.completed_today}</div>
+          <div className="text-sm text-gray-600 dark:text-gray-400">Concluídos</div>
         </div>
       </div>
     );
@@ -422,15 +422,15 @@ const RemindersPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 p-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
         <div className="max-w-6xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-200 rounded w-1/4 mb-6"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-6"></div>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {[...Array(6)].map((_, i) => (
-                <div key={i} className="bg-white rounded-lg shadow-md p-4">
-                  <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                <div key={i} className="card p-4">
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
                 </div>
               ))}
             </div>
@@ -441,26 +441,26 @@ const RemindersPage: React.FC = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 p-4">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Lembretes</h1>
-            <p className="text-gray-600">Gerencie seus lembretes e notificações</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Lembretes</h1>
+            <p className="text-gray-600 dark:text-gray-400">Gerencie seus lembretes e notificações</p>
           </div>
           
           <div className="flex items-center gap-3">
             <button
               onClick={() => setShowSettings(!showSettings)}
-              className="p-2 text-gray-600 hover:bg-gray-100 rounded-full"
+              className="p-2 text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full"
             >
               <Settings className="w-5 h-5" />
             </button>
             
             <button
               onClick={() => setShowForm(!showForm)}
-              className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="btn btn-primary"
             >
               <Plus className="w-4 h-4" />
               Novo Lembrete
@@ -470,8 +470,8 @@ const RemindersPage: React.FC = () => {
 
         {/* Configurações de Notificação */}
         {showSettings && (
-          <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-            <h2 className="text-xl font-semibold mb-4">Configurações de Notificação</h2>
+          <div className="card p-6 mb-6">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Configurações de Notificação</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
@@ -482,13 +482,13 @@ const RemindersPage: React.FC = () => {
                     onChange={(e) => updateNotificationSettings({ push_enabled: e.target.checked })}
                     className="mr-2"
                   />
-                  <span className="text-sm font-medium text-gray-700">Notificações Push</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Notificações Push</span>
                 </label>
                 
                 {!isSubscribed && (
                   <button
                     onClick={requestPermission}
-                    className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 text-sm"
+                    className="btn btn-primary"
                   >
                     Ativar Notificações
                   </button>
@@ -496,14 +496,14 @@ const RemindersPage: React.FC = () => {
               </div>
               
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
+                <label className="label">
                   Antecedência (minutos)
                 </label>
                 <input
                   type="number"
                   value={notificationSettings?.reminder_advance_minutes ?? 15}
                   onChange={(e) => updateNotificationSettings({ reminder_advance_minutes: parseInt(e.target.value) })}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="input"
                 />
               </div>
             </div>
@@ -534,7 +534,7 @@ const RemindersPage: React.FC = () => {
           {/* Lembretes de Hoje */}
           {getTodayReminders().length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold text-blue-600 mb-4 flex items-center gap-2">
+              <h2 className="text-xl font-semibold text-ikigai-green mb-4 flex items-center gap-2">
                 <Calendar className="w-5 h-5" />
                 Lembretes de Hoje
               </h2>
@@ -547,7 +547,7 @@ const RemindersPage: React.FC = () => {
           {/* Próximos Lembretes */}
           {getUpcomingReminders().length > 0 && (
             <div>
-              <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
+              <h2 className="text-xl font-semibold text-ikigai-black dark:text-white mb-4 flex items-center gap-2">
                 <Bell className="w-5 h-5" />
                 Próximos Lembretes
               </h2>
@@ -561,11 +561,11 @@ const RemindersPage: React.FC = () => {
           {reminders.length === 0 && !loading && (
             <div className="text-center py-12">
               <Bell className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Nenhum lembrete criado</h3>
-              <p className="text-gray-600 mb-4">Crie seu primeiro lembrete para começar a organizar sua rotina</p>
+              <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2">Nenhum lembrete criado</h3>
+              <p className="text-gray-600 dark:text-gray-400 mb-4">Crie seu primeiro lembrete para começar a organizar sua rotina</p>
               <button
                 onClick={() => setShowForm(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+                className="btn btn-primary"
               >
                 Criar Primeiro Lembrete
               </button>
