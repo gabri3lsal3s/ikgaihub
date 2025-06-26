@@ -20,10 +20,7 @@ export default defineConfig({
               cacheName: 'google-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
-              },
-              cacheKeyWillBeUsed: async ({ request }) => {
-                return `${request.url}`
+                maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
           },
@@ -34,10 +31,7 @@ export default defineConfig({
               cacheName: 'gstatic-fonts-cache',
               expiration: {
                 maxEntries: 10,
-                maxAgeSeconds: 60 * 60 * 24 * 365 // 365 days
-              },
-              cacheKeyWillBeUsed: async ({ request }) => {
-                return `${request.url}`
+                maxAgeSeconds: 60 * 60 * 24 * 365
               }
             }
           },
@@ -48,7 +42,7 @@ export default defineConfig({
               cacheName: 'supabase-api-cache',
               expiration: {
                 maxEntries: 50,
-                maxAgeSeconds: 60 * 60 * 24 // 24 hours
+                maxAgeSeconds: 60 * 60 * 24
               },
               networkTimeoutSeconds: 10
             }
@@ -60,13 +54,12 @@ export default defineConfig({
               cacheName: 'images-cache',
               expiration: {
                 maxEntries: 100,
-                maxAgeSeconds: 60 * 60 * 24 * 30 // 30 days
+                maxAgeSeconds: 60 * 60 * 24 * 30
               }
             }
           }
         ],
-        cleanupOutdatedCaches: true,
-        sourcemap: true
+        cleanupOutdatedCaches: true
       },
       manifest: {
         name: 'IkigaiHub - Hub de Ferramentas de Saúde',
@@ -136,6 +129,13 @@ export default defineConfig({
             short_name: 'Metas',
             description: 'Gerenciar metas',
             url: '/goals',
+            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+          },
+          {
+            name: 'Lembretes',
+            short_name: 'Lembretes',
+            description: 'Gerenciar lembretes',
+            url: '/reminders',
             icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
           }
         ]
