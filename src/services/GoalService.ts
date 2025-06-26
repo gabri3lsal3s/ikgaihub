@@ -40,9 +40,23 @@ export class GoalService {
       throw new Error('Data de início é obrigatória');
     }
     
+    // Obter o usuário atual
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      throw new Error('Usuário não autenticado');
+    }
+    
+    // Preparar dados com user_id
+    const goalDataWithUserId = {
+      ...goalData,
+      user_id: user.id
+    };
+    
+    console.log('GoalService.createGoal - Dados com user_id:', goalDataWithUserId);
+    
     const { data, error } = await supabase
       .from('goals')
-      .insert([goalData])
+      .insert([goalDataWithUserId])
       .select()
       .single();
 
@@ -84,8 +98,15 @@ export class GoalService {
 
   // Adicionar progresso à meta
   static async addProgress(goalId: string, value: number, date?: string): Promise<GoalProgress> {
+    // Obter o usuário atual
+    const { data: { user }, error: authError } = await supabase.auth.getUser();
+    if (authError || !user) {
+      throw new Error('Usuário não autenticado');
+    }
+    
     const progressData = {
       goal_id: goalId,
+      user_id: user.id,
       date: date || new Date().toISOString().split('T')[0],
       value
     };

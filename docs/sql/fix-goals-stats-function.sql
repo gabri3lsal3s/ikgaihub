@@ -12,7 +12,13 @@ JOIN pg_namespace n ON p.pronamespace = n.oid
 WHERE n.nspname = 'public' 
 AND p.proname = 'get_user_goals_stats';
 
--- 2. Se a função não existir, criar uma nova
+-- 2. REMOVER FUNÇÃO EXISTENTE (se existir)
+DROP FUNCTION IF EXISTS get_user_goals_stats(UUID);
+DROP FUNCTION IF EXISTS get_user_goals_stats(uuid);
+DROP FUNCTION IF EXISTS get_user_goals_stats(p_user_id UUID);
+DROP FUNCTION IF EXISTS get_user_goals_stats(p_user_id uuid);
+
+-- 3. CRIAR FUNÇÃO CORRIGIDA
 CREATE OR REPLACE FUNCTION get_user_goals_stats(p_user_id UUID)
 RETURNS TABLE (
     total_goals BIGINT,
@@ -51,7 +57,7 @@ BEGIN
 END;
 $$;
 
--- 3. Verificar se a função foi criada corretamente
+-- 4. Verificar se a função foi criada corretamente
 SELECT 
     p.proname as function_name,
     pg_get_function_arguments(p.oid) as arguments,
@@ -61,10 +67,10 @@ JOIN pg_namespace n ON p.pronamespace = n.oid
 WHERE n.nspname = 'public' 
 AND p.proname = 'get_user_goals_stats';
 
--- 4. Testar a função (substitua o UUID por um ID válido)
+-- 5. Testar a função (substitua o UUID por um ID válido)
 -- SELECT * FROM get_user_goals_stats('71396815-6029-4213-a618-b0ca76ae4b1a'::UUID);
 
--- 5. Verificar permissões RLS
+-- 6. Verificar permissões RLS
 SELECT 
     schemaname,
     tablename,
@@ -77,12 +83,12 @@ SELECT
 FROM pg_policies 
 WHERE tablename = 'goals';
 
--- 6. Se necessário, criar política RLS para a função
+-- 7. Se necessário, criar política RLS para a função
 DROP POLICY IF EXISTS "Users can view their own goal stats" ON goals;
 CREATE POLICY "Users can view their own goal stats" ON goals
     FOR SELECT USING (auth.uid() = user_id);
 
--- 7. Verificar se a tabela goals existe e tem a estrutura correta
+-- 8. Verificar se a tabela goals existe e tem a estrutura correta
 SELECT 
     column_name,
     data_type,
