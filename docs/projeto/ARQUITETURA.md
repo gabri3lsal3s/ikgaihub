@@ -355,3 +355,60 @@ VITE_SUPABASE_ANON_KEY=your-anon-key
 - [Roadmap](./ROADMAP.md) - Cronograma de Desenvolvimento
 - [Resumo Executivo](./RESUMO-EXECUTIVO.md) - Status Atual
 - [CHANGELOG](../../CHANGELOG.md) - Histórico de Mudanças
+
+---
+
+## 🎯 Sistema de Metas: Arquitetura e Integração
+
+O sistema de metas é um dos pilares do IkigaiHub, integrando frontend, backend e gamificação. Veja como ele se encaixa na arquitetura geral:
+
+### **1. Estrutura Técnica**
+- **Banco de Dados:**
+  - Tabelas: `goals`, `goal_progress`, `achievements`
+  - Triggers: Atualização automática de status e conquistas
+  - RLS: Segurança por usuário
+- **Serviços:**
+  - `GoalService.ts`: CRUD de metas, progresso, estatísticas
+  - `AchievementService.ts`: Conquistas e pontos
+  - `NotificationService.ts`: Notificações de progresso, conclusão e prazos
+- **Hooks:**
+  - `useGoals.ts`: Gerenciamento de metas e progresso
+  - `useNotifications.ts`: Notificações automáticas de prazos
+- **Componentes:**
+  - `GoalCard`, `GoalForm`, `GoalProgress`, `GoalAchievements`, `GoalStats`
+
+### **2. Fluxo de Dados e Integração**
+
+```mermaid
+flowchart TD
+  User[Usuário] -- CRUD --> GoalForm
+  GoalForm -- chama --> useGoals
+  useGoals -- usa --> GoalService
+  GoalService -- acessa --> Supabase[(Supabase DB)]
+  GoalService -- triggers --> Triggers[Triggers SQL]
+  Triggers -- atualiza --> goals/goal_progress/achievements
+  useGoals -- atualiza --> GoalCard/GoalProgress
+  GoalCard -- ação --> GoalProgress
+  GoalProgress -- consulta --> GoalService
+  GoalCard -- ação --> NotificationService
+  NotificationService -- mostra --> Toast[Notificações]
+  GoalAchievements -- consulta --> AchievementService
+  GoalStats -- consulta --> GoalService
+```
+
+### **3. Principais Pontos de Manutenção**
+- **Adicionar novo tipo de meta:**
+  - Atualizar enum/type em banco, tipos TS e formulários.
+- **Alterar lógica de progresso:**
+  - Ajustar triggers SQL e métodos do GoalService.
+- **Novas conquistas/gamificação:**
+  - Adicionar lógica no AchievementService e triggers.
+- **Notificações customizadas:**
+  - Expandir NotificationService e hooks.
+
+### **4. Segurança e Boas Práticas**
+- RLS garante que cada usuário só veja/edite suas metas.
+- Triggers mantêm integridade do progresso e conquistas.
+- Hooks isolam lógica de estado e facilitam testes.
+
+---

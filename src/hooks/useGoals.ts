@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import { GoalService } from '../services/GoalService';
+import { NotificationService } from '../services/NotificationService';
 import { Goal, CreateGoalForm, UpdateGoalForm, UseGoalsReturn } from '../types';
 import toast from 'react-hot-toast';
 
@@ -73,13 +74,29 @@ export const useGoals = (): UseGoalsReturn => {
       // Atualizar a meta localmente com o novo progresso
       setGoals(prev => prev.map(goal => {
         if (goal.id === goalId) {
+          const newCurrentValue = goal.current_value + value;
+          const wasCompleted = goal.status === 'completed';
+          const isNowCompleted = newCurrentValue >= goal.target_value;
+          
+          // Se a meta acabou de ser completada, mostrar notificação
+          if (!wasCompleted && isNowCompleted) {
+            NotificationService.showGoalCompletedNotification(goal.title);
+          }
+          
           return {
             ...goal,
-            current_value: goal.current_value + value
+            current_value: newCurrentValue,
+            status: isNowCompleted ? 'completed' : goal.status
           };
         }
         return goal;
       }));
+      
+      // Mostrar notificação de progresso
+      const goal = goals.find(g => g.id === goalId);
+      if (goal) {
+        NotificationService.showProgressNotification(value, goal.unit);
+      }
       
       toast.success('Progresso registrado com sucesso!');
     } catch (err) {
@@ -88,7 +105,7 @@ export const useGoals = (): UseGoalsReturn => {
       toast.error(errorMessage);
       throw err;
     }
-  }, []);
+  }, [goals]);
 
   const refresh = useCallback(() => {
     fetchGoals();

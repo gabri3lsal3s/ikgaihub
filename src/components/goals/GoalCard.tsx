@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { GoalCardProps } from '../../types';
 import { GoalService } from '../../services/GoalService';
+import { GoalProgress } from './GoalProgress';
 import { 
   Target, 
   Calendar, 
@@ -9,7 +10,9 @@ import {
   Plus,
   CheckCircle,
   Clock,
-  AlertTriangle
+  AlertTriangle,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -22,6 +25,7 @@ export const GoalCard: React.FC<GoalCardProps> = ({
   const [isAddingProgress, setIsAddingProgress] = useState(false);
   const [progressValue, setProgressValue] = useState(1);
   const [showProgressInput, setShowProgressInput] = useState(false);
+  const [showDetailedProgress, setShowDetailedProgress] = useState(false);
 
   const progressPercentage = GoalService.calculateProgressPercentage(goal);
   const isNearDeadline = GoalService.isGoalNearDeadline(goal);
@@ -146,9 +150,18 @@ export const GoalCard: React.FC<GoalCardProps> = ({
           <span className="text-gray-600 dark:text-gray-400">
             Progresso: {goal.current_value} / {goal.target_value} {goal.unit}
           </span>
-          <span className="font-medium text-ikigai-green">
-            {progressPercentage.toFixed(1)}%
-          </span>
+          <div className="flex items-center gap-2">
+            <span className="font-medium text-ikigai-green">
+              {progressPercentage.toFixed(1)}%
+            </span>
+            <button
+              onClick={() => setShowDetailedProgress(!showDetailedProgress)}
+              className="p-1 text-gray-500 hover:text-ikigai-green transition-colors"
+              title={showDetailedProgress ? "Ocultar detalhes" : "Ver detalhes"}
+            >
+              {showDetailedProgress ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+          </div>
         </div>
         <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
           <div 
@@ -157,6 +170,13 @@ export const GoalCard: React.FC<GoalCardProps> = ({
           />
         </div>
       </div>
+
+      {/* Progresso Detalhado */}
+      {showDetailedProgress && (
+        <div className="mb-3">
+          <GoalProgress goal={goal} />
+        </div>
+      )}
 
       {/* Progress Input */}
       {showProgressInput && (

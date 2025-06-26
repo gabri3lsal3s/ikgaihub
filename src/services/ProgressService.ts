@@ -452,4 +452,60 @@ export class ProgressService {
       return { data: null, error: errorMessage }
     }
   }
+
+  /**
+   * Busca a conclusão de exercício do dia atual
+   */
+  static async getTodayExerciseCompletion(exerciseId: string) {
+    try {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        return { data: null, error: 'Usuário não autenticado' };
+      }
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from('exercise_completions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('exercise_id', exerciseId)
+        .gte('completed_at', `${today}T00:00:00`)
+        .lte('completed_at', `${today}T23:59:59`)
+        .single();
+      if (error && error.code !== 'PGRST116') {
+        return { data: null, error: error.message };
+      }
+      return { data, error: null };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      return { data: null, error: errorMessage };
+    }
+  }
+
+  /**
+   * Busca a conclusão de receita do dia atual
+   */
+  static async getTodayRecipeCompletion(recipeId: string) {
+    try {
+      const { data: { user }, error: userError } = await supabase.auth.getUser();
+      if (userError || !user) {
+        return { data: null, error: 'Usuário não autenticado' };
+      }
+      const today = new Date().toISOString().split('T')[0];
+      const { data, error } = await supabase
+        .from('recipe_completions')
+        .select('*')
+        .eq('user_id', user.id)
+        .eq('recipe_id', recipeId)
+        .gte('completed_at', `${today}T00:00:00`)
+        .lte('completed_at', `${today}T23:59:59`)
+        .single();
+      if (error && error.code !== 'PGRST116') {
+        return { data: null, error: error.message };
+      }
+      return { data, error: null };
+    } catch (error) {
+      const errorMessage = error instanceof Error ? error.message : 'Erro desconhecido';
+      return { data: null, error: errorMessage };
+    }
+  }
 } 

@@ -9,6 +9,7 @@ interface NextMealProps {
   nextMeal: string | null;
   recipes: Recipe[];
   timeRemaining: string;
+  onRefreshStats?: () => void;
   className?: string;
 }
 
@@ -16,9 +17,10 @@ export const NextMeal: React.FC<NextMealProps> = ({
   nextMeal,
   recipes,
   timeRemaining,
+  onRefreshStats,
   className = ''
 }) => {
-  const { completeRecipe, isRecipeCompletedToday } = useProgress();
+  const { completeRecipe, removeRecipeCompletion, getTodayRecipeCompletion } = useProgress();
   const [completedRecipes, setCompletedRecipes] = useState<Set<string>>(new Set());
   const [loadingStates, setLoadingStates] = useState<Set<string>>(new Set());
 
@@ -31,7 +33,7 @@ export const NextMeal: React.FC<NextMealProps> = ({
       const completed = new Set<string>();
       
       for (const recipe of recipes) {
-        const result = await isRecipeCompletedToday(recipe.id);
+        const result = await getTodayRecipeCompletion(recipe.id);
         if (result.data) {
           completed.add(recipe.id);
         }
@@ -43,7 +45,7 @@ export const NextMeal: React.FC<NextMealProps> = ({
     if (recipes.length > 0) {
       checkCompletedRecipes();
     }
-  }, [recipes, isRecipeCompletedToday]);
+  }, [recipes, getTodayRecipeCompletion]);
 
   const handleToggleCompletion = async (recipe: Recipe) => {
     const recipeId = recipe.id;
@@ -53,13 +55,20 @@ export const NextMeal: React.FC<NextMealProps> = ({
 
     try {
       if (isCompleted) {
-        // Por simplicidade, vamos apenas remover do estado local por enquanto
-        setCompletedRecipes(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(recipeId);
-          return newSet;
-        });
-        toast.success('Receita desmarcada como concluída');
+        // Buscar o ID da conclusão da receita hoje
+        const { data: completion, error } = await getTodayRecipeCompletion(recipeId);
+        if (error || !completion) {
+          toast.error('Erro ao buscar conclusão para remover');
+        } else {
+          await removeRecipeCompletion(completion.id);
+          setCompletedRecipes(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(recipeId);
+            return newSet;
+          });
+          if (typeof onRefreshStats === 'function') onRefreshStats();
+          toast.success('Receita desmarcada como concluída');
+        }
       } else {
         // Marcar como concluída
         const result = await completeRecipe({

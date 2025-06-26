@@ -6,6 +6,7 @@ import { NextMeal } from '../components/dashboard/NextMeal';
 import { QuickStats } from '../components/dashboard/QuickStats';
 import { NutritionStats } from '../components/dashboard/NutritionStats';
 import { ExerciseStats } from '../components/dashboard/ExerciseStats';
+import { GoalStats } from '../components/dashboard/GoalStats';
 
 const HomePage: React.FC = () => {
   const { stats, loading, error, refresh } = useDashboard();
@@ -37,12 +38,15 @@ const HomePage: React.FC = () => {
       />
 
       {/* Estatísticas Especializadas */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Estatísticas de Nutrição */}
         <NutritionStats />
 
         {/* Estatísticas de Exercícios */}
         <ExerciseStats />
+
+        {/* Estatísticas de Metas */}
+        <GoalStats />
       </div>
 
       {/* Mensagem de erro */}
@@ -74,9 +78,9 @@ const HomePage: React.FC = () => {
           <div className="prose dark:prose-invert max-w-none">
             <p className="text-sm text-gray-600 dark:text-gray-400">
               O <strong>IkigaiHub</strong> é um PWA mobile-first desenvolvido para facilitar a gestão de saúde pessoal.
-              Atualmente estamos na <strong>Fase 5</strong> do desenvolvimento, com estatísticas especializadas implementadas.
+              Atualmente estamos na <strong>Fase 6</strong> do desenvolvimento, com o sistema de metas implementado.
             </p>
-            <div className="mt-4 grid grid-cols-1 md:grid-cols-5 gap-4">
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-6 gap-4">
               <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Fase 1</p>
                 <p className="text-sm font-semibold text-ikigai-green">✅ Concluída</p>
@@ -93,8 +97,12 @@ const HomePage: React.FC = () => {
                 <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Fase 4</p>
                 <p className="text-sm font-semibold text-ikigai-green">✅ Concluída</p>
               </div>
-              <div className="text-center p-3 bg-ikigai-green/10 rounded-lg">
+              <div className="text-center p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Fase 5</p>
+                <p className="text-sm font-semibold text-ikigai-green">✅ Concluída</p>
+              </div>
+              <div className="text-center p-3 bg-ikigai-green/10 rounded-lg">
+                <p className="text-xs font-medium text-gray-500 dark:text-gray-400">Fase 6</p>
                 <p className="text-sm font-semibold text-ikigai-green">🔄 Ativa</p>
               </div>
             </div>

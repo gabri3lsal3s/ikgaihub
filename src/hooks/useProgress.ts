@@ -180,6 +180,16 @@ export const useProgress = () => {
     }
   }, [])
 
+  // Buscar conclusão de exercício do dia
+  const getTodayExerciseCompletion = useCallback(async (exerciseId: string) => {
+    return ProgressService.getTodayExerciseCompletion(exerciseId);
+  }, []);
+
+  // Buscar conclusão de receita do dia
+  const getTodayRecipeCompletion = useCallback(async (recipeId: string) => {
+    return ProgressService.getTodayRecipeCompletion(recipeId);
+  }, []);
+
   // Limpar erro
   const clearError = useCallback(() => {
     setError(null)
@@ -196,6 +206,8 @@ export const useProgress = () => {
     getProgressChart,
     removeExerciseCompletion,
     removeRecipeCompletion,
+    getTodayExerciseCompletion,
+    getTodayRecipeCompletion,
     clearError
   }
 } 

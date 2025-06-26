@@ -8,13 +8,15 @@ import toast from 'react-hot-toast';
 interface TodayExercisesProps {
   exercises: Exercise[];
   className?: string;
+  onRefreshStats?: () => void;
 }
 
 export const TodayExercises: React.FC<TodayExercisesProps> = ({
   exercises,
-  className = ''
+  className = '',
+  onRefreshStats
 }) => {
-  const { completeExercise, isExerciseCompletedToday } = useProgress();
+  const { completeExercise, removeExerciseCompletion, getTodayExerciseCompletion, getProgressStats } = useProgress();
   const [completedExercises, setCompletedExercises] = useState<Set<string>>(new Set());
   const [loadingStates, setLoadingStates] = useState<Set<string>>(new Set());
 
@@ -27,7 +29,7 @@ export const TodayExercises: React.FC<TodayExercisesProps> = ({
       const completed = new Set<string>();
       
       for (const exercise of exercises) {
-        const result = await isExerciseCompletedToday(exercise.id);
+        const result = await getTodayExerciseCompletion(exercise.id);
         if (result.data) {
           completed.add(exercise.id);
         }
@@ -39,7 +41,7 @@ export const TodayExercises: React.FC<TodayExercisesProps> = ({
     if (exercises.length > 0) {
       checkCompletedExercises();
     }
-  }, [exercises, isExerciseCompletedToday]);
+  }, [exercises, getTodayExerciseCompletion]);
 
   const handleToggleCompletion = async (exercise: Exercise) => {
     const exerciseId = exercise.id;
@@ -49,14 +51,20 @@ export const TodayExercises: React.FC<TodayExercisesProps> = ({
 
     try {
       if (isCompleted) {
-        // Remover conclusão (buscar o ID da conclusão primeiro)
-        // Por simplicidade, vamos apenas remover do estado local por enquanto
-        setCompletedExercises(prev => {
-          const newSet = new Set(prev);
-          newSet.delete(exerciseId);
-          return newSet;
-        });
-        toast.success('Exercício desmarcado como concluído');
+        // Buscar o ID da conclusão do exercício hoje
+        const { data: completion, error } = await getTodayExerciseCompletion(exerciseId);
+        if (error || !completion) {
+          toast.error('Erro ao buscar conclusão para remover');
+        } else {
+          await removeExerciseCompletion(completion.id);
+          setCompletedExercises(prev => {
+            const newSet = new Set(prev);
+            newSet.delete(exerciseId);
+            return newSet;
+          });
+          if (typeof onRefreshStats === 'function') onRefreshStats();
+          toast.success('Exercício desmarcado como concluído');
+        }
       } else {
         // Marcar como concluído
         const result = await completeExercise({

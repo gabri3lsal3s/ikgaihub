@@ -2,11 +2,13 @@ import React, { useState, useMemo } from 'react';
 import { useGoals } from '../hooks/useGoals';
 import { GoalCard } from '../components/goals/GoalCard';
 import { GoalForm } from '../components/goals/GoalForm';
+import { GoalAchievements } from '../components/goals/GoalAchievements';
 import { Goal, CreateGoalForm, UpdateGoalForm } from '../types';
 import { 
   Plus, 
   Target, 
-  Filter
+  Filter,
+  Trophy
 } from 'lucide-react';
 
 const GoalsPage: React.FC = () => {
@@ -16,6 +18,7 @@ const GoalsPage: React.FC = () => {
   const [editingGoal, setEditingGoal] = useState<Goal | null>(null);
   const [filterType, setFilterType] = useState<'all' | 'exercise' | 'nutrition' | 'general'>('all');
   const [filterStatus, setFilterStatus] = useState<'all' | 'active' | 'completed' | 'paused' | 'cancelled'>('all');
+  const [showAchievements, setShowAchievements] = useState(false);
 
   // Filtrar metas
   const filteredGoals = useMemo(() => {
@@ -143,13 +146,22 @@ const GoalsPage: React.FC = () => {
             Defina e acompanhe seus objetivos de saúde e bem-estar
           </p>
         </div>
-        <button
-          onClick={() => setShowForm(true)}
-          className="btn btn-primary mt-4 sm:mt-0 flex items-center gap-2"
-        >
-          <Plus size={16} />
-          Nova Meta
-        </button>
+        <div className="flex gap-2 mt-4 sm:mt-0">
+          <button
+            onClick={() => setShowAchievements(!showAchievements)}
+            className="btn btn-secondary flex items-center gap-2"
+          >
+            <Trophy size={16} />
+            {showAchievements ? 'Ocultar' : 'Ver'} Conquistas
+          </button>
+          <button
+            onClick={() => setShowForm(true)}
+            className="btn btn-primary flex items-center gap-2"
+          >
+            <Plus size={16} />
+            Nova Meta
+          </button>
+        </div>
       </div>
 
       {/* Estatísticas */}
@@ -212,6 +224,13 @@ const GoalsPage: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Conquistas */}
+      {showAchievements && (
+        <div className="mb-8">
+          <GoalAchievements />
+        </div>
+      )}
 
       {/* Lista de Metas */}
       {filteredGoals.length === 0 ? (

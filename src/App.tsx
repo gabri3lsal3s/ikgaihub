@@ -1,4 +1,3 @@
-import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import { Toaster } from 'react-hot-toast';
 import { AuthProvider } from './contexts/AuthContext';
@@ -9,7 +8,31 @@ import LoginPage from './pages/LoginPage';
 import ExercisePage from './pages/ExercisePage';
 import MealPlanPage from './pages/MealPlanPage';
 import GoalsPage from './pages/GoalsPage';
+import { useNotifications } from './hooks/useNotifications';
 import './styles/index.css';
+
+function AppContent() {
+  useNotifications();
+  
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Layout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<HomePage />} />
+        <Route path="exercises" element={<ExercisePage />} />
+        <Route path="meal-plan" element={<MealPlanPage />} />
+        <Route path="goals" element={<GoalsPage />} />
+      </Route>
+    </Routes>
+  );
+}
 
 function App() {
   return (
@@ -39,22 +62,7 @@ function App() {
             },
           }}
         />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route
-            path="/"
-            element={
-              <ProtectedRoute>
-                <Layout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<HomePage />} />
-            <Route path="exercises" element={<ExercisePage />} />
-            <Route path="meal-plan" element={<MealPlanPage />} />
-            <Route path="goals" element={<GoalsPage />} />
-          </Route>
-        </Routes>
+        <AppContent />
       </div>
     </AuthProvider>
   );
