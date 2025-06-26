@@ -15,6 +15,8 @@ interface PWAState {
   deferredPrompt: PWAInstallPromptEvent | null;
 }
 
+let swRegistration: ServiceWorkerRegistration | null = null;
+
 export const usePWA = () => {
   const [pwaState, setPwaState] = useState<PWAState>({
     isInstalled: false,
@@ -94,7 +96,7 @@ export const usePWA = () => {
   // Registrar Service Worker (com verificação para evitar duplicação)
   useEffect(() => {
     const registerSW = async () => {
-      if ('serviceWorker' in navigator) {
+      if ('serviceWorker' in navigator && !swRegistration) {
         try {
           // Verificar se já existe um Service Worker registrado
           const existingRegistration = await navigator.serviceWorker.getRegistration();

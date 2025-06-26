@@ -33,8 +33,6 @@ export class GoalService {
 
   // Criar nova meta
   static async createGoal(goalData: CreateGoalForm): Promise<Goal> {
-    console.log('GoalService.createGoal - Dados recebidos:', goalData);
-    
     // Validar dados antes de enviar
     if (!goalData.start_date) {
       throw new Error('Data de início é obrigatória');
@@ -51,8 +49,6 @@ export class GoalService {
       ...goalData,
       user_id: user.id
     };
-    
-    console.log('GoalService.createGoal - Dados com user_id:', goalDataWithUserId);
     
     const { data, error } = await supabase
       .from('goals')

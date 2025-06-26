@@ -12,6 +12,9 @@ export default defineConfig({
       includeAssets: ['favicon.ico', 'apple-touch-icon.png', 'masked-icon.svg'],
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,woff,woff2}'],
+        disableDevLogs: true,
+        clientsClaim: true,
+        skipWaiting: true,
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -76,30 +79,15 @@ export default defineConfig({
         dir: 'ltr',
         icons: [
           {
-            src: 'pwa-192x192.png',
-            sizes: '192x192',
-            type: 'image/png',
+            src: '/favicon.svg',
+            sizes: 'any',
+            type: 'image/svg+xml',
             purpose: 'any'
           },
           {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any'
-          },
-          {
-            src: 'pwa-512x512.png',
-            sizes: '512x512',
-            type: 'image/png',
-            purpose: 'any maskable'
-          }
-        ],
-        screenshots: [
-          {
-            src: 'og-image.png',
-            sizes: '1280x720',
-            type: 'image/png',
-            form_factor: 'wide'
+            src: '/favicon.ico',
+            sizes: '16x16 32x32',
+            type: 'image/x-icon'
           }
         ],
         shortcuts: [
@@ -108,35 +96,35 @@ export default defineConfig({
             short_name: 'Dashboard',
             description: 'Acessar dashboard principal',
             url: '/',
-            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+            icons: [{ src: '/favicon.svg', sizes: 'any' }]
           },
           {
             name: 'Exercícios',
             short_name: 'Exercícios',
             description: 'Gerenciar exercícios',
             url: '/exercises',
-            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+            icons: [{ src: '/favicon.svg', sizes: 'any' }]
           },
           {
             name: 'Refeições',
             short_name: 'Refeições',
             description: 'Gerenciar plano alimentar',
             url: '/meal-plan',
-            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+            icons: [{ src: '/favicon.svg', sizes: 'any' }]
           },
           {
             name: 'Metas',
             short_name: 'Metas',
             description: 'Gerenciar metas',
             url: '/goals',
-            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+            icons: [{ src: '/favicon.svg', sizes: 'any' }]
           },
           {
             name: 'Lembretes',
             short_name: 'Lembretes',
             description: 'Gerenciar lembretes',
             url: '/reminders',
-            icons: [{ src: 'pwa-192x192.png', sizes: '192x192' }]
+            icons: [{ src: '/favicon.svg', sizes: 'any' }]
           }
         ]
       },
