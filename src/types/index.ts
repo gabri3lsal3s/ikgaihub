@@ -436,4 +436,104 @@ export interface UseRemindersReturn {
   deleteReminder: (id: string) => Promise<void>;
   toggleReminder: (id: string, isActive: boolean) => Promise<void>;
   refresh: () => void;
-} 
+}
+
+// =====================================================
+// TIPOS DO SISTEMA DE LEMBRETES
+// =====================================================
+
+export type ReminderType = 'meal' | 'exercise' | 'goal' | 'custom';
+export type RecurrencePattern = 'daily' | 'weekly' | 'monthly';
+export type NotificationType = 'push' | 'email' | 'in_app';
+
+export interface Reminder {
+  id: string;
+  user_id: string;
+  title: string;
+  description: string | null;
+  reminder_type: ReminderType;
+  target_date: string;
+  target_time: string | null;
+  is_recurring: boolean;
+  recurrence_pattern: RecurrencePattern | null;
+  recurrence_days: number[] | null;
+  is_active: boolean;
+  notification_enabled: boolean;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ReminderSchedule {
+  id: string;
+  reminder_id: string;
+  scheduled_time: string;
+  is_sent: boolean;
+  sent_at: string | null;
+  created_at: string;
+}
+
+export interface NotificationSettings {
+  id: string;
+  user_id: string;
+  push_enabled: boolean;
+  email_enabled: boolean;
+  reminder_advance_minutes: number;
+  quiet_hours_start: string;
+  quiet_hours_end: string;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface NotificationHistory {
+  id: string;
+  user_id: string;
+  reminder_id: string | null;
+  notification_type: NotificationType;
+  title: string;
+  body: string | null;
+  is_read: boolean;
+  read_at: string | null;
+  sent_at: string;
+}
+
+export interface CreateReminderData {
+  title: string;
+  description?: string;
+  reminder_type: ReminderType;
+  target_date: string;
+  target_time?: string;
+  is_recurring?: boolean;
+  recurrence_pattern?: RecurrencePattern;
+  recurrence_days?: number[];
+  notification_enabled?: boolean;
+}
+
+export interface UpdateReminderData {
+  title?: string;
+  description?: string;
+  reminder_type?: ReminderType;
+  target_date?: string;
+  target_time?: string;
+  is_recurring?: boolean;
+  recurrence_pattern?: RecurrencePattern;
+  recurrence_days?: number[];
+  is_active?: boolean;
+  notification_enabled?: boolean;
+}
+
+export interface ReminderWithSchedule extends Reminder {
+  schedules?: ReminderSchedule[];
+  next_schedule?: ReminderSchedule;
+}
+
+export interface ReminderStats {
+  total_reminders: number;
+  active_reminders: number;
+  today_reminders: number;
+  upcoming_reminders: number;
+  completed_today: number;
+}
+
+// =====================================================
+// FIM DOS TIPOS DO SISTEMA DE LEMBRETES
+// ===================================================== 

@@ -8,6 +8,7 @@ import LoginPage from './pages/LoginPage';
 import ExercisePage from './pages/ExercisePage';
 import MealPlanPage from './pages/MealPlanPage';
 import GoalsPage from './pages/GoalsPage';
+import RemindersPage from './pages/RemindersPage';
 import { PWAInstallPrompt } from './components/PWAInstallPrompt';
 import { OfflineIndicator } from './components/OfflineIndicator';
 import { useNotifications } from './hooks/useNotifications';
@@ -35,6 +36,7 @@ function AppContent() {
           <Route path="exercises" element={<ExercisePage />} />
           <Route path="meal-plan" element={<MealPlanPage />} />
           <Route path="goals" element={<GoalsPage />} />
+          <Route path="reminders" element={<RemindersPage />} />
         </Route>
       </Routes>
       

@@ -7,6 +7,7 @@ import { QuickStats } from '../components/dashboard/QuickStats';
 import { NutritionStats } from '../components/dashboard/NutritionStats';
 import { ExerciseStats } from '../components/dashboard/ExerciseStats';
 import { GoalStats } from '../components/dashboard/GoalStats';
+import ReminderWidget from '../components/dashboard/ReminderWidget';
 
 const HomePage: React.FC = () => {
   const { stats, loading, error, refresh } = useDashboard();
@@ -38,7 +39,7 @@ const HomePage: React.FC = () => {
       />
 
       {/* Estatísticas Especializadas */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Estatísticas de Nutrição */}
         <NutritionStats />
 
@@ -47,6 +48,9 @@ const HomePage: React.FC = () => {
 
         {/* Estatísticas de Metas */}
         <GoalStats />
+
+        {/* Widget de Lembretes */}
+        <ReminderWidget />
       </div>
 
       {/* Mensagem de erro */}

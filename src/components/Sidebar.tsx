@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Home, Utensils, Dumbbell, Target } from 'lucide-react'
+import { Home, Utensils, Dumbbell, Target, Bell } from 'lucide-react'
 
 const Sidebar: React.FC = () => {
   const location = useLocation()
@@ -10,6 +10,7 @@ const Sidebar: React.FC = () => {
     { name: 'Plano Alimentar', href: '/meal-plan', icon: Utensils },
     { name: 'Exercícios', href: '/exercises', icon: Dumbbell },
     { name: 'Metas', href: '/goals', icon: Target },
+    { name: 'Lembretes', href: '/reminders', icon: Bell },
   ]
 
   return (

@@ -374,10 +374,14 @@ export interface Database {
           user_id: string
           title: string
           description: string | null
-          type: 'exercise' | 'meal' | 'goal' | 'general'
-          time: string
-          days_of_week: number[]
+          reminder_type: 'meal' | 'exercise' | 'goal' | 'custom'
+          target_date: string
+          target_time: string | null
+          is_recurring: boolean
+          recurrence_pattern: string | null
+          recurrence_days: number[] | null
           is_active: boolean
+          notification_enabled: boolean
           created_at: string
           updated_at: string
         }
@@ -386,10 +390,14 @@ export interface Database {
           user_id: string
           title: string
           description?: string | null
-          type: 'exercise' | 'meal' | 'goal' | 'general'
-          time: string
-          days_of_week?: number[]
+          reminder_type: 'meal' | 'exercise' | 'goal' | 'custom'
+          target_date: string
+          target_time?: string | null
+          is_recurring?: boolean
+          recurrence_pattern?: string | null
+          recurrence_days?: number[] | null
           is_active?: boolean
+          notification_enabled?: boolean
           created_at?: string
           updated_at?: string
         }
@@ -398,12 +406,112 @@ export interface Database {
           user_id?: string
           title?: string
           description?: string | null
-          type?: 'exercise' | 'meal' | 'goal' | 'general'
-          time?: string
-          days_of_week?: number[]
+          reminder_type?: 'meal' | 'exercise' | 'goal' | 'custom'
+          target_date?: string
+          target_time?: string | null
+          is_recurring?: boolean
+          recurrence_pattern?: string | null
+          recurrence_days?: number[] | null
           is_active?: boolean
+          notification_enabled?: boolean
           created_at?: string
           updated_at?: string
+        }
+      }
+      reminder_schedules: {
+        Row: {
+          id: string
+          reminder_id: string
+          scheduled_time: string
+          is_sent: boolean
+          sent_at: string | null
+          created_at: string
+        }
+        Insert: {
+          id?: string
+          reminder_id: string
+          scheduled_time: string
+          is_sent?: boolean
+          sent_at?: string | null
+          created_at?: string
+        }
+        Update: {
+          id?: string
+          reminder_id?: string
+          scheduled_time?: string
+          is_sent?: boolean
+          sent_at?: string | null
+          created_at?: string
+        }
+      }
+      notification_settings: {
+        Row: {
+          id: string
+          user_id: string
+          push_enabled: boolean
+          email_enabled: boolean
+          reminder_advance_minutes: number
+          quiet_hours_start: string
+          quiet_hours_end: string
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          push_enabled?: boolean
+          email_enabled?: boolean
+          reminder_advance_minutes?: number
+          quiet_hours_start?: string
+          quiet_hours_end?: string
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          push_enabled?: boolean
+          email_enabled?: boolean
+          reminder_advance_minutes?: number
+          quiet_hours_start?: string
+          quiet_hours_end?: string
+          created_at?: string
+          updated_at?: string
+        }
+      }
+      notification_history: {
+        Row: {
+          id: string
+          user_id: string
+          reminder_id: string | null
+          notification_type: string
+          title: string
+          body: string | null
+          is_read: boolean
+          read_at: string | null
+          sent_at: string
+        }
+        Insert: {
+          id?: string
+          user_id: string
+          reminder_id?: string | null
+          notification_type: string
+          title: string
+          body?: string | null
+          is_read?: boolean
+          read_at?: string | null
+          sent_at?: string
+        }
+        Update: {
+          id?: string
+          user_id?: string
+          reminder_id?: string | null
+          notification_type?: string
+          title?: string
+          body?: string | null
+          is_read?: boolean
+          read_at?: string | null
+          sent_at?: string
         }
       }
     }
