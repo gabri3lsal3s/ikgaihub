@@ -8,6 +8,8 @@ import LoginPage from './pages/LoginPage';
 import ExercisePage from './pages/ExercisePage';
 import MealPlanPage from './pages/MealPlanPage';
 import GoalsPage from './pages/GoalsPage';
+import { PWAInstallPrompt } from './components/PWAInstallPrompt';
+import { OfflineIndicator } from './components/OfflineIndicator';
 import { useNotifications } from './hooks/useNotifications';
 import './styles/index.css';
 
@@ -15,22 +17,30 @@ function AppContent() {
   useNotifications();
   
   return (
-    <Routes>
-      <Route path="/login" element={<LoginPage />} />
-      <Route
-        path="/"
-        element={
-          <ProtectedRoute>
-            <Layout />
-          </ProtectedRoute>
-        }
-      >
-        <Route index element={<HomePage />} />
-        <Route path="exercises" element={<ExercisePage />} />
-        <Route path="meal-plan" element={<MealPlanPage />} />
-        <Route path="goals" element={<GoalsPage />} />
-      </Route>
-    </Routes>
+    <>
+      {/* Indicador de status offline */}
+      <OfflineIndicator />
+      
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        <Route
+          path="/"
+          element={
+            <ProtectedRoute>
+              <Layout />
+            </ProtectedRoute>
+          }
+        >
+          <Route index element={<HomePage />} />
+          <Route path="exercises" element={<ExercisePage />} />
+          <Route path="meal-plan" element={<MealPlanPage />} />
+          <Route path="goals" element={<GoalsPage />} />
+        </Route>
+      </Routes>
+      
+      {/* Componente PWA */}
+      <PWAInstallPrompt />
+    </>
   );
 }
 
