@@ -1,13 +1,27 @@
 import React, { useState } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../hooks/useAuth'
-import { Menu, X, LogOut, User } from 'lucide-react'
+import { Menu, X, LogOut, User, Home, Utensils, Dumbbell, Target, Bell } from 'lucide-react'
 
 const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const { user, signOut } = useAuth()
+  const location = useLocation()
+
+  const navigation = [
+    { name: 'Home', href: '/', icon: Home },
+    { name: 'Plano Alimentar', href: '/meal-plan', icon: Utensils },
+    { name: 'Exercícios', href: '/exercises', icon: Dumbbell },
+    { name: 'Metas', href: '/goals', icon: Target },
+    { name: 'Lembretes', href: '/reminders', icon: Bell },
+  ]
 
   const handleLogout = async () => {
     await signOut()
+  }
+
+  const closeMenu = () => {
+    setIsMenuOpen(false)
   }
 
   return (
@@ -77,7 +91,8 @@ const Header: React.FC = () => {
       {isMenuOpen && (
         <div className="md:hidden">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
-            <div className="flex items-center justify-between px-3 py-2">
+            {/* User Info */}
+            <div className="flex items-center justify-between px-3 py-2 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center space-x-2">
                 <div className="h-8 w-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center">
                   <User className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -93,6 +108,32 @@ const Header: React.FC = () => {
                 <LogOut className="h-4 w-4" />
                 <span>Sair</span>
               </button>
+            </div>
+
+            {/* Navigation Links */}
+            <div className="pt-2">
+              {navigation.map((item) => {
+                const isActive = location.pathname === item.href
+                return (
+                  <Link
+                    key={item.name}
+                    to={item.href}
+                    onClick={closeMenu}
+                    className={`group flex items-center px-3 py-2 text-base font-medium rounded-md transition-colors ${
+                      isActive
+                        ? 'bg-green-600 text-white'
+                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-700 dark:hover:text-white'
+                    }`}
+                  >
+                    <item.icon
+                      className={`mr-3 h-5 w-5 ${
+                        isActive ? 'text-white' : 'text-gray-400 group-hover:text-gray-500 dark:text-gray-400 dark:group-hover:text-gray-300'
+                      }`}
+                    />
+                    {item.name}
+                  </Link>
+                )
+              })}
             </div>
           </div>
         </div>
