@@ -7,6 +7,7 @@
 [![Vite](https://img.shields.io/badge/Vite-5.0.0-purple.svg)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3.5-38B2AC.svg)](https://tailwindcss.com/)
 [![Supabase](https://img.shields.io/badge/Supabase-2.50.2-green.svg)](https://supabase.com/)
+[![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)](https://web.dev/progressive-web-apps/)
 
 ## 📋 Visão Geral
 
@@ -21,16 +22,17 @@ O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvi
 
 ## 🚀 Status do Projeto
 
-### **Progresso Geral**: 75% Concluído
-### **Versão Atual**: 1.0.0
-### **Fase Atual**: Fase 6 - Sistema de Metas (60% concluído)
+### **Progresso Geral**: 85% Concluído
+### **Versão Atual**: v0.9.0
+### **Fase Atual**: Fase 7 - Sistema de Lembretes (Planejada)
 
 ### **Fases Concluídas** ✅
-- **Fase 1**: Base do Projeto (v0.3.0)
-- **Fase 2**: Sistema de Autenticação (v0.4.0)
-- **Fase 3**: CRUD Básico (v0.5.0 - v0.6.0)
-- **Fase 4**: Dashboard Inteligente (v0.7.0)
-- **Fase 5**: Melhorias nas Estatísticas (v0.8.0)
+- **Fase 1**: Base do Projeto (v0.3.0) ✅
+- **Fase 2**: Sistema de Autenticação (v0.4.0) ✅
+- **Fase 3**: CRUD Básico (v0.5.0 - v0.6.0) ✅
+- **Fase 4**: Dashboard Inteligente (v0.7.0) ✅
+- **Fase 5**: Melhorias nas Estatísticas (v0.8.0) ✅
+- **Fase 6**: Sistema de Metas (v0.9.0) ✅
 
 ## 🏗️ Stack Tecnológica
 
@@ -50,11 +52,12 @@ O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvi
 - **Banco de Dados**: PostgreSQL com Row Level Security
 - **Storage**: Supabase Storage (quando necessário)
 
-### **PWA**
-- **Service Worker**: Workbox
-- **Manifest**: Configuração completa
-- **Offline**: Funcionalidades básicas
-- **Instalação**: Adicionar à tela inicial
+### **PWA** 📱
+- **Service Worker**: Workbox configurado
+- **Manifest**: Gerado automaticamente pelo VitePWA
+- **Cache Strategy**: Implementado para fontes e assets
+- **Instalação**: Pronto para instalar na tela inicial
+- **Status**: Parcialmente funcional (80% completo)
 
 ## 📱 Funcionalidades
 
@@ -64,16 +67,17 @@ O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvi
 - **🏃‍♂️ Gestão de Exercícios**: CRUD completo organizado por dia da semana
 - **📊 Dashboard Inteligente**: Informações baseadas no horário atual
 - **📈 Estatísticas**: Componentes especializados para nutrição e exercícios
-- **🎯 Sistema de Metas**: Estrutura básica implementada (60%)
+- **🎯 Sistema de Metas**: Completo com progresso, conquistas e notificações
 - **📊 Gráficos Interativos**: Pizza e barras para visualização de dados
-- **✅ Marcadores de Conclusão**: Persistentes entre sessões
+- **✅ Marcadores de Conclusão**: Persistentes no Supabase
+- **🏆 Sistema de Conquistas**: Badges e notificações automáticas
+- **📱 PWA Básico**: Manifest, Service Worker e cache configurados
 
 ### 🔄 **Em Desenvolvimento**
-- **🎯 Sistema de Metas**: Interface completa e funcionalidades avançadas
+- **⏰ Sistema de Lembretes**: Notificações personalizadas (Fase 7)
 
 ### 📋 **Planejadas**
-- **⏰ Sistema de Lembretes**: Notificações personalizadas
-- **🏆 Gamificação**: Badges, conquistas e desafios
+- **🏆 Gamificação Avançada**: Streaks, rankings e desafios
 - **📱 PWA Completo**: Funcionalidades offline avançadas
 - **🔗 Integrações**: APIs de nutrição e wearables
 - **📈 Histórico Detalhado**: Relatórios avançados de progresso
@@ -127,6 +131,22 @@ npm run build
 npm run preview
 ```
 
+## 📱 PWA - Status e Funcionalidades
+
+### **✅ Funcionalidades PWA Implementadas**
+- **Manifest**: Configurado com VitePWA plugin
+- **Service Worker**: Workbox com cache strategy
+- **Ícones**: Múltiplos tamanhos (192x192, 512x512)
+- **Meta Tags**: PWA meta tags completas
+- **Cache**: Fontes Google e assets estáticos
+- **Instalação**: Pronto para instalar na tela inicial
+
+### **📋 PWA - Próximas Implementações**
+- **Offline Mode**: Funcionalidades offline completas
+- **Push Notifications**: Notificações push
+- **Background Sync**: Sincronização em background
+- **App Shell**: Interface offline-first
+
 ## 📁 Estrutura do Projeto
 
 ```
@@ -155,6 +175,9 @@ src/
 - `goals` - Metas do usuário
 - `goal_progress` - Rastreamento de progresso
 - `achievements` - Conquistas e badges
+- `exercise_completions` - Conclusões de exercícios
+- `recipe_completions` - Conclusões de receitas
+- `daily_stats` - Estatísticas diárias
 - `reminders` - Sistema de lembretes (planejado)
 
 ### **Scripts SQL Disponíveis**
@@ -198,100 +221,43 @@ npm run type-check   # Verificação de tipos TypeScript
 
 ## 📚 Documentação
 
-### **📁 [docs/projeto/](./docs/projeto/)**
-- **[📋 PRD](./docs/projeto/PRD.md)** - Documento de Requisitos do Produto
-- **[🏗️ Arquitetura](./docs/projeto/ARQUITETURA.md)** - Documentação técnica completa
-- **[🗺️ Roadmap](./docs/projeto/ROADMAP.md)** - Cronograma de desenvolvimento
-- **[📊 Resumo Executivo](./docs/projeto/RESUMO-EXECUTIVO.md)** - Status atual
+### **Documentação do Projeto**
+- 📁 [docs/projeto/PRD.md](./docs/projeto/PRD.md) - Product Requirements Document
+- 📁 [docs/projeto/ARQUITETURA.md](./docs/projeto/ARQUITETURA.md) - Arquitetura técnica
+- 📁 [docs/projeto/ROADMAP.md](./docs/projeto/ROADMAP.md) - Roadmap e cronograma
+- 📁 [docs/projeto/RESUMO-EXECUTIVO.md](./docs/projeto/RESUMO-EXECUTIVO.md) - Resumo executivo
 
-### **📁 [docs/instrucoes/](./docs/instrucoes/)**
-- **[📱 PWA-ASSETS-INSTRUCTIONS.md](./docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md)** - Configuração PWA
-- **[🔒 INSTRUCOES-CORRECAO-RLS.md](./docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md)** - Políticas de segurança
-
-### **Outros Documentos**
-- **[📝 CHANGELOG.md](./CHANGELOG.md)** - Histórico de versões
-- **[📚 Índice](./docs/INDICE.md)** - Organização da documentação
-
-## 🎯 Funcionalidades Principais
-
-### **Dashboard Inteligente**
-- Widgets de exercícios do dia
-- Próxima refeição planejada
-- Estatísticas rápidas de progresso
-- Gráficos de nutrição e exercícios
-- Marcadores de conclusão persistentes
-
-### **Sistema de Metas**
-- Criação e acompanhamento de metas
-- Conquistas e badges
-- Progresso visual
-- Lembretes personalizados (planejado)
-
-### **Acompanhamento de Progresso**
-- Marcadores de conclusão persistentes
-- Estatísticas semanais, mensais e anuais
-- Gráficos interativos
-- Histórico detalhado (planejado)
-
-## 📱 PWA Features
-
-- **Instalação**: Adicione à tela inicial
-- **Offline**: Funcionalidades básicas offline
-- **Notificações**: Push notifications (em desenvolvimento)
-- **Responsivo**: Design adaptativo mobile-first
+### **Instruções de Manutenção**
+- 📁 [docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md](./docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md) - Manutenção do sistema de metas
+- 📁 [docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md](./docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md) - Instruções para assets PWA
 
 ## 🤝 Contribuição
 
-### **Como Contribuir**
 1. Fork o projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
 3. Commit suas mudanças (`git commit -m 'Add some AmazingFeature'`)
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-### **Padrões de Commit**
-Seguimos o padrão [Conventional Commits](https://www.conventionalcommits.org/):
-
-- `feat:` Nova funcionalidade
-- `fix:` Correção de bug
-- `docs:` Documentação
-- `style:` Formatação de código
-- `refactor:` Refatoração
-- `test:` Testes
-- `chore:` Tarefas de manutenção
-
 ## 📄 Licença
 
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
 ## 👨‍💻 Autor
 
-**Gabriel** - Estudante de Programação
+**Gabriel** - Desenvolvedor Full Stack
 
-- **GitHub**: [@seu-usuario](https://github.com/seu-usuario)
-- **LinkedIn**: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
+- GitHub: [@seu-usuario](https://github.com/seu-usuario)
+- LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
 
 ## 🙏 Agradecimentos
 
-- [React](https://react.dev/) - Framework JavaScript
-- [TypeScript](https://www.typescriptlang.org/) - Linguagem tipada
-- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
-- [Supabase](https://supabase.com/) - Backend como serviço
+- [Supabase](https://supabase.com/) - Backend as a Service
 - [Vite](https://vitejs.dev/) - Build tool
-- [Chart.js](https://www.chartjs.org/) - Gráficos interativos
-
-## 🔗 Links Úteis
-
-- **[Supabase](https://supabase.com/docs)**
-- **[React](https://react.dev/)**
-- **[Tailwind CSS](https://tailwindcss.com/docs)**
-- **[Vite](https://vitejs.dev/)**
-- **[TypeScript](https://www.typescriptlang.org/docs)**
+- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
+- [React](https://react.dev/) - UI Library
+- [TypeScript](https://www.typescriptlang.org/) - Type Safety
 
 ---
 
-<div align="center">
-
-**⭐ Se este projeto te ajudou, considere dar uma estrela!**
-
-</div> 
+**⭐ Se este projeto te ajudou, considere dar uma estrela no repositório!** 
