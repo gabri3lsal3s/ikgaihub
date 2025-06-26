@@ -39,6 +39,14 @@ Este índice organiza toda a documentação do projeto **IkigaiHub**, um PWA mob
 - Métricas de sucesso
 - Roadmap de funcionalidades
 
+### **🎯 [Planejamento Futuro](./projeto/PLANEJAMENTO-FUTURO.md)**
+- Planejamento detalhado das próximas funcionalidades
+- Drag and drop nas receitas
+- Aprimoramento de animações
+- Sistema de temas (Dark/Light/White)
+- Revisão de responsividade
+- Cronograma de implementação
+
 ---
 
 ## 🔧 Instruções de Manutenção
