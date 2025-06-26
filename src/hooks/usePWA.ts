@@ -30,14 +30,11 @@ export const usePWA = () => {
   // Verificar se o app está instalado
   useEffect(() => {
     const checkInstallation = () => {
-      const isStandalone = window.matchMedia('(display-mode: standalone)').matches;
-      // @ts-ignore - standalone existe em alguns navegadores
-      const isInstalled = isStandalone || window.navigator.standalone === true;
-      
       setPwaState(prev => ({
         ...prev,
-        isInstalled,
-        isStandalone
+        isInstalled: window.matchMedia('(display-mode: standalone)').matches ||
+                    (window.navigator as any).standalone === true,
+        isInstallable: !window.matchMedia('(display-mode: standalone)').matches
       }));
     };
 
@@ -94,11 +91,21 @@ export const usePWA = () => {
     };
   }, []);
 
-  // Registrar Service Worker
+  // Registrar Service Worker (com verificação para evitar duplicação)
   useEffect(() => {
     const registerSW = async () => {
       if ('serviceWorker' in navigator) {
         try {
+          // Verificar se já existe um Service Worker registrado
+          const existingRegistration = await navigator.serviceWorker.getRegistration();
+          
+          if (existingRegistration) {
+            setRegistration(existingRegistration);
+            console.log('Service Worker já registrado:', existingRegistration);
+            return;
+          }
+
+          // Registrar novo Service Worker apenas se não existir
           const reg = await navigator.serviceWorker.register('/sw.js');
           setRegistration(reg);
           console.log('Service Worker registrado:', reg);
@@ -177,8 +184,6 @@ export const usePWA = () => {
 
     try {
       const notification = new Notification(title, {
-        icon: '/pwa-192x192.png',
-        badge: '/pwa-192x192.png',
         ...options
       });
 

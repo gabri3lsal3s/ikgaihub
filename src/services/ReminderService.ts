@@ -243,7 +243,7 @@ export class ReminderService {
   }
 
   /**
-   * Buscar agendamentos pendentes
+   * Buscar agendamentos pendentes do usuário
    */
   static async getPendingSchedules(userId: string): Promise<ReminderSchedule[]> {
     try {
@@ -251,9 +251,10 @@ export class ReminderService {
         .from('reminder_schedules')
         .select(`
           *,
-          reminders!inner(user_id)
+          reminders!inner(user_id, is_active)
         `)
         .eq('reminders.user_id', userId)
+        .eq('reminders.is_active', true)
         .eq('is_sent', false)
         .gte('scheduled_time', new Date().toISOString())
         .order('scheduled_time', { ascending: true });
@@ -417,9 +418,12 @@ export class ReminderService {
    */
   static async getReminderStats(userId: string): Promise<ReminderStats> {
     try {
-      const today = new Date().toISOString().split('T')[0];
-      const tomorrow = new Date();
+      const today = new Date();
+      const tomorrow = new Date(today);
       tomorrow.setDate(tomorrow.getDate() + 1);
+      
+      // Formatar datas no formato ISO correto
+      const todayStr = today.toISOString().split('T')[0];
       const tomorrowStr = tomorrow.toISOString().split('T')[0];
 
       // Total de lembretes
@@ -444,8 +448,8 @@ export class ReminderService {
         `, { count: 'exact', head: true })
         .eq('reminders.user_id', userId)
         .eq('reminders.is_active', true)
-        .gte('scheduled_time', `${today}T00:00:00`)
-        .lt('scheduled_time', `${tomorrowStr}T00:00:00`);
+        .gte('scheduled_time', `${todayStr}T00:00:00.000Z`)
+        .lt('scheduled_time', `${tomorrowStr}T00:00:00.000Z`);
 
       // Lembretes futuros
       const { count: upcomingReminders } = await supabase
@@ -456,7 +460,7 @@ export class ReminderService {
         `, { count: 'exact', head: true })
         .eq('reminders.user_id', userId)
         .eq('reminders.is_active', true)
-        .gte('scheduled_time', `${tomorrowStr}T00:00:00`);
+        .gte('scheduled_time', `${tomorrowStr}T00:00:00.000Z`);
 
       // Lembretes completados hoje
       const { count: completedToday } = await supabase
@@ -468,8 +472,8 @@ export class ReminderService {
         .eq('reminders.user_id', userId)
         .eq('reminders.is_active', true)
         .eq('is_sent', true)
-        .gte('sent_at', `${today}T00:00:00`)
-        .lt('sent_at', `${tomorrowStr}T00:00:00`);
+        .gte('sent_at', `${todayStr}T00:00:00.000Z`)
+        .lt('sent_at', `${tomorrowStr}T00:00:00.000Z`);
 
       return {
         total_reminders: totalReminders || 0,

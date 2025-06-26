@@ -191,10 +191,11 @@ export const useReminders = () => {
   }, [reminders]);
 
   const getTodayReminders = useCallback((): ReminderWithSchedule[] => {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date();
+    const todayStr = today.toISOString().split('T')[0];
     return remindersWithSchedules.filter(r => 
       r.schedules?.some(s => 
-        !s.is_sent && s.scheduled_time.startsWith(today)
+        !s.is_sent && s.scheduled_time.startsWith(todayStr)
       )
     );
   }, [remindersWithSchedules]);
