@@ -230,6 +230,8 @@ npm run type-check   # Verificação de tipos TypeScript
 ### **Instruções de Manutenção**
 - 📁 [docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md](./docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md) - Manutenção do sistema de metas
 - 📁 [docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md](./docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md) - Instruções para assets PWA
+- 📁 [docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md](./docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md) - Correção de políticas RLS
+- 📁 [docs/instrucoes/REORGANIZACAO-DOCUMENTACAO.md](./docs/instrucoes/REORGANIZACAO-DOCUMENTACAO.md) - Organização da documentação
 
 ## 🤝 Contribuição
 
