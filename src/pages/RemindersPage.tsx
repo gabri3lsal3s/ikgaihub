@@ -8,22 +8,18 @@ import toast from 'react-hot-toast';
 
 const RemindersPage: React.FC = () => {
   const {
-    reminders,
     remindersWithSchedules,
-    stats,
     notificationSettings,
     loading,
-    error,
     createReminder,
     updateReminder,
     deleteReminder,
     toggleReminderActive,
     updateNotificationSettings,
-    getTodayReminders,
-    getUpcomingReminders,
-    getOverdueReminders,
     refresh,
-    clearError
+    getOverdueReminders,
+    getTodayReminders,
+    getUpcomingReminders
   } = useReminders();
 
   const { requestPermission, isSubscribed } = useNotifications();

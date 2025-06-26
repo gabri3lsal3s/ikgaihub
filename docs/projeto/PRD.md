@@ -97,7 +97,7 @@ Ser a principal ferramenta de gestão de saúde para pessoas que buscam um estil
   - Acompanhamento de progresso
   - Prazos e deadlines
   - Notificações de conquistas
-  - Histórico de metas concluídas
+- Histórico de metas concluídas
   - **✅ CORRIGIDO**: Erro RLS resolvido
 
 ### ✅ **6. Sistema de Lembretes**
@@ -108,7 +108,7 @@ Ser a principal ferramenta de gestão de saúde para pessoas que buscam um estil
   - Lembretes de exercícios
   - Configuração de horários
   - Notificações push
-  - Integração com metas
+- Integração com metas
   - **✅ CORRIGIDO**: Interface simplificada
 
 ### ✅ **7. PWA Completo**
@@ -127,10 +127,10 @@ Ser a principal ferramenta de gestão de saúde para pessoas que buscam um estil
 - **Descrição**: Sistema de conquistas e motivação
 - **Funcionalidades**:
   - Badges e conquistas
-  - Streaks de consistência
+- Streaks de consistência
   - Pontuação por atividades
   - Níveis de usuário
-  - Desafios semanais/mensais
+- Desafios semanais/mensais
   - Ranking de progresso
 
 ---

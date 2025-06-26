@@ -10,7 +10,6 @@ import {
   NotificationSettings,
   NotificationHistory
 } from '../types';
-import toast from 'react-hot-toast';
 
 export const useReminders = () => {
   const { user } = useAuth();

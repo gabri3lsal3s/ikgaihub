@@ -163,12 +163,12 @@ export class GoalService {
   // Buscar estatísticas de metas do usuário
   static async getGoalStats(): Promise<GoalStats> {
     try {
-      const { data, error } = await supabase
-        .rpc('get_user_goals_stats', {
-          p_user_id: (await supabase.auth.getUser()).data.user?.id
-        });
+    const { data, error } = await supabase
+      .rpc('get_user_goals_stats', {
+        p_user_id: (await supabase.auth.getUser()).data.user?.id
+      });
 
-      if (error) {
+    if (error) {
         console.error('Erro na função RPC:', error);
         // Retornar valores padrão em caso de erro
         return {
@@ -178,15 +178,15 @@ export class GoalService {
           completion_rate: 0,
           total_points: 0
         };
-      }
+    }
 
-      return data?.[0] || {
-        total_goals: 0,
-        active_goals: 0,
-        completed_goals: 0,
-        completion_rate: 0,
-        total_points: 0
-      };
+    return data?.[0] || {
+      total_goals: 0,
+      active_goals: 0,
+      completed_goals: 0,
+      completion_rate: 0,
+      total_points: 0
+    };
     } catch (error) {
       console.error('Erro ao buscar estatísticas:', error);
       // Retornar valores padrão em caso de erro

@@ -19,7 +19,7 @@ const ReminderWidget: React.FC = () => {
   const upcomingReminders = getUpcomingReminders();
   const overdueReminders = getOverdueReminders();
 
-  const handleMarkAsCompleted = async (reminderId: string, scheduleId?: string) => {
+  const handleMarkAsCompleted = async (scheduleId?: string) => {
     try {
       if (scheduleId) {
         await ReminderService.markScheduleAsSent(scheduleId);
@@ -94,7 +94,7 @@ const ReminderWidget: React.FC = () => {
         {showActions && (
           <div className="flex items-center gap-1 ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
             <button
-              onClick={() => handleMarkAsCompleted(reminder.id, nextSchedule?.id)}
+              onClick={() => handleMarkAsCompleted(nextSchedule?.id)}
               className="p-1 text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 rounded transition-colors"
               title="Marcar como concluído"
             >

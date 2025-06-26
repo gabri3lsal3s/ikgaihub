@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from './useAuth';
 import { ReminderService } from '../services/ReminderService';
-import { NotificationType } from '../types';
+import { NotificationService } from '../services/NotificationService';
 import toast from 'react-hot-toast';
 
 export const useNotifications = () => {

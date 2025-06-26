@@ -16,7 +16,7 @@ export const TodayExercises: React.FC<TodayExercisesProps> = ({
   className = '',
   onRefreshStats
 }) => {
-  const { completeExercise, removeExerciseCompletion, getTodayExerciseCompletion, getProgressStats } = useProgress();
+  const { completeExercise, removeExerciseCompletion, getTodayExerciseCompletion } = useProgress();
   const [completedExercises, setCompletedExercises] = useState<Set<string>>(new Set());
   const [loadingStates, setLoadingStates] = useState<Set<string>>(new Set());
 
