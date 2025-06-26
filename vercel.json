@@ -10,28 +10,43 @@
       }
     }
   ],
-  "routes": [
+  "rewrites": [
     {
-      "src": "/sw.js",
-      "dest": "/sw.js",
-      "headers": {
-        "Cache-Control": "public, max-age=0, must-revalidate",
-        "Service-Worker-Allowed": "/"
-      }
+      "source": "/sw.js",
+      "destination": "/sw.js"
     },
     {
-      "src": "/manifest.webmanifest",
-      "dest": "/manifest.webmanifest",
-      "headers": {
-        "Content-Type": "application/manifest+json"
-      }
+      "source": "/manifest.webmanifest",
+      "destination": "/manifest.webmanifest"
     },
     {
-      "src": "/(.*)",
-      "dest": "/index.html"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "headers": [
+    {
+      "source": "/sw.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
+        }
+      ]
+    },
+    {
+      "source": "/manifest.webmanifest",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "application/manifest+json"
+        }
+      ]
+    },
     {
       "source": "/assets/(.*)",
       "headers": [
