@@ -151,9 +151,9 @@ export const GoalCard: React.FC<GoalCardProps> = ({
             Progresso: {goal.current_value} / {goal.target_value} {goal.unit}
           </span>
           <div className="flex items-center gap-2">
-            <span className="font-medium text-ikigai-green">
-              {progressPercentage.toFixed(1)}%
-            </span>
+          <span className="font-medium text-ikigai-green">
+            {progressPercentage.toFixed(1)}%
+          </span>
             <button
               onClick={() => setShowDetailedProgress(!showDetailedProgress)}
               className="p-1 text-gray-500 hover:text-ikigai-green transition-colors"

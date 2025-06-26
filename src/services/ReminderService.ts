@@ -22,9 +22,9 @@ export class ReminderService {
    */
   static async getReminders(userId: string): Promise<Reminder[]> {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
-        .select('*')
+    const { data, error } = await supabase
+      .from('reminders')
+      .select('*')
         .eq('user_id', userId)
         .order('target_date', { ascending: true });
 
@@ -41,11 +41,11 @@ export class ReminderService {
    */
   static async getReminderById(id: string): Promise<Reminder | null> {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
-        .select('*')
-        .eq('id', id)
-        .single();
+    const { data, error } = await supabase
+      .from('reminders')
+      .select('*')
+      .eq('id', id)
+      .single();
 
       if (error) throw error;
       return data;
@@ -60,16 +60,16 @@ export class ReminderService {
    */
   static async createReminder(userId: string, reminderData: CreateReminderData): Promise<Reminder> {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
+    const { data, error } = await supabase
+      .from('reminders')
         .insert({
           user_id: userId,
           ...reminderData,
           is_active: true,
           notification_enabled: reminderData.notification_enabled ?? true
         })
-        .select()
-        .single();
+      .select()
+      .single();
 
       if (error) throw error;
 
@@ -79,9 +79,9 @@ export class ReminderService {
       } else {
         // Criar agendamento único
         await this.createSchedule(data.id, data.target_date, data.target_time);
-      }
+    }
 
-      return data;
+    return data;
     } catch (error) {
       console.error('Erro ao criar lembrete:', error);
       throw error;
@@ -93,12 +93,12 @@ export class ReminderService {
    */
   static async updateReminder(id: string, updateData: UpdateReminderData): Promise<Reminder> {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
+    const { data, error } = await supabase
+      .from('reminders')
         .update(updateData)
-        .eq('id', id)
-        .select()
-        .single();
+      .eq('id', id)
+      .select()
+      .single();
 
       if (error) throw error;
 
@@ -110,9 +110,9 @@ export class ReminderService {
         } else {
           await this.createSchedule(id, data.target_date, data.target_time);
         }
-      }
+    }
 
-      return data;
+    return data;
     } catch (error) {
       console.error('Erro ao atualizar lembrete:', error);
       throw error;
@@ -124,10 +124,10 @@ export class ReminderService {
    */
   static async deleteReminder(id: string): Promise<void> {
     try {
-      const { error } = await supabase
-        .from('reminders')
-        .delete()
-        .eq('id', id);
+    const { error } = await supabase
+      .from('reminders')
+      .delete()
+      .eq('id', id);
 
       if (error) throw error;
     } catch (error) {
@@ -272,15 +272,23 @@ export class ReminderService {
    */
   static async markScheduleAsSent(scheduleId: string): Promise<void> {
     try {
-      const { error } = await supabase
+      console.log('Marcando agendamento como enviado:', scheduleId);
+      
+      const { data, error } = await supabase
         .from('reminder_schedules')
         .update({
           is_sent: true,
           sent_at: new Date().toISOString()
         })
-        .eq('id', scheduleId);
+        .eq('id', scheduleId)
+        .select();
 
-      if (error) throw error;
+      if (error) {
+        console.error('Erro do Supabase:', error);
+        throw error;
+      }
+      
+      console.log('Agendamento marcado como enviado com sucesso:', data);
     } catch (error) {
       console.error('Erro ao marcar agendamento como enviado:', error);
       throw error;
@@ -296,9 +304,9 @@ export class ReminderService {
    */
   static async getNotificationSettings(userId: string): Promise<NotificationSettings | null> {
     try {
-      const { data, error } = await supabase
+    const { data, error } = await supabase
         .from('notification_settings')
-        .select('*')
+      .select('*')
         .eq('user_id', userId)
         .single();
 
@@ -374,9 +382,9 @@ export class ReminderService {
    */
   static async getNotificationHistory(userId: string, limit = 50): Promise<NotificationHistory[]> {
     try {
-      const { data, error } = await supabase
+    const { data, error } = await supabase
         .from('notification_history')
-        .select('*')
+      .select('*')
         .eq('user_id', userId)
         .order('sent_at', { ascending: false })
         .limit(limit);
@@ -493,8 +501,8 @@ export class ReminderService {
    */
   static async getRemindersWithSchedules(userId: string): Promise<ReminderWithSchedule[]> {
     try {
-      const { data, error } = await supabase
-        .from('reminders')
+    const { data, error } = await supabase
+      .from('reminders')
         .select(`
           *,
           reminder_schedules(*)
@@ -562,7 +570,7 @@ export class ReminderService {
     if (time) {
       return `${formattedDate} às ${time}`;
     }
-    
+
     return formattedDate;
   }
 

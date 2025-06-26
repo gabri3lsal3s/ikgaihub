@@ -93,7 +93,14 @@ export const GoalForm: React.FC<GoalFormProps> = ({
 
     try {
       setLoading(true);
-      await onSubmit(formData);
+      
+      // Preparar dados para envio, tratando datas vazias
+      const submitData = {
+        ...formData,
+        end_date: formData.end_date || undefined // Converter string vazia para undefined
+      };
+      
+      await onSubmit(submitData);
       onClose();
     } catch (error) {
       console.error('Erro ao salvar meta:', error);
@@ -103,6 +110,21 @@ export const GoalForm: React.FC<GoalFormProps> = ({
   };
 
   const handleInputChange = (field: keyof CreateGoalForm, value: string | number) => {
+    // Tratar datas especificamente
+    if (field === 'start_date' && !value) {
+      // Não permitir data de início vazia
+      return;
+    }
+    
+    if (field === 'end_date' && !value) {
+      // Permitir data de fim vazia (opcional)
+      setFormData(prev => ({ ...prev, [field]: '' }));
+      if (errors[field]) {
+        setErrors(prev => ({ ...prev, [field]: '' }));
+      }
+      return;
+    }
+    
     setFormData(prev => ({ ...prev, [field]: value }));
     if (errors[field]) {
       setErrors(prev => ({ ...prev, [field]: '' }));

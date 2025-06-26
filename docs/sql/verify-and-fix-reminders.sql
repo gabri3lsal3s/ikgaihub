@@ -169,6 +169,9 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Função para estatísticas de metas (corrigir divisão por zero)
+-- Primeiro remover a função existente se ela existir
+DROP FUNCTION IF EXISTS get_user_goals_stats(UUID);
+
 CREATE OR REPLACE FUNCTION get_user_goals_stats(user_id_param UUID)
 RETURNS TABLE (
     total_goals INTEGER,

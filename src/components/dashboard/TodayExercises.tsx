@@ -57,13 +57,13 @@ export const TodayExercises: React.FC<TodayExercisesProps> = ({
           toast.error('Erro ao buscar conclusão para remover');
         } else {
           await removeExerciseCompletion(completion.id);
-          setCompletedExercises(prev => {
-            const newSet = new Set(prev);
-            newSet.delete(exerciseId);
-            return newSet;
-          });
+        setCompletedExercises(prev => {
+          const newSet = new Set(prev);
+          newSet.delete(exerciseId);
+          return newSet;
+        });
           if (typeof onRefreshStats === 'function') onRefreshStats();
-          toast.success('Exercício desmarcado como concluído');
+        toast.success('Exercício desmarcado como concluído');
         }
       } else {
         // Marcar como concluído

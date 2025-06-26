@@ -33,6 +33,13 @@ export class GoalService {
 
   // Criar nova meta
   static async createGoal(goalData: CreateGoalForm): Promise<Goal> {
+    console.log('GoalService.createGoal - Dados recebidos:', goalData);
+    
+    // Validar dados antes de enviar
+    if (!goalData.start_date) {
+      throw new Error('Data de início é obrigatória');
+    }
+    
     const { data, error } = await supabase
       .from('goals')
       .insert([goalData])
@@ -40,6 +47,7 @@ export class GoalService {
       .single();
 
     if (error) {
+      console.error('GoalService.createGoal - Erro do Supabase:', error);
       throw new Error(`Erro ao criar meta: ${error.message}`);
     }
 

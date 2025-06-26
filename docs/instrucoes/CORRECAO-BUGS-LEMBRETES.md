@@ -57,12 +57,19 @@ Execute o script de verificação e correção:
 
 1. Acesse o **Supabase Dashboard**
 2. Vá para **SQL Editor**
-3. Execute o script: `docs/sql/verify-and-fix-reminders.sql`
-4. Verifique se não há erros
+3. Execute primeiro o script específico da função:
+   ```sql
+   -- Execute primeiro: docs/sql/fix-goals-stats-function.sql
+   ```
+4. Depois execute o script completo:
+   ```sql
+   -- Execute depois: docs/sql/verify-and-fix-reminders.sql
+   ```
+5. Verifique se não há erros
 
 ### **Passo 2: Verificar Correções**
 
-Após executar o script, verifique se:
+Após executar os scripts, verifique se:
 
 ```sql
 -- Verificar se as tabelas existem
@@ -72,6 +79,9 @@ WHERE table_name IN ('reminders', 'reminder_schedules', 'notification_settings',
 -- Verificar se a função existe
 SELECT routine_name FROM information_schema.routines 
 WHERE routine_name = 'get_user_goals_stats';
+
+-- Testar a função (substitua pelo seu user_id)
+SELECT * FROM get_user_goals_stats('seu-user-id-aqui');
 ```
 
 ### **Passo 3: Testar Funcionalidades**

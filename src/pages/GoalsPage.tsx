@@ -154,13 +154,13 @@ const GoalsPage: React.FC = () => {
             <Trophy size={16} />
             {showAchievements ? 'Ocultar' : 'Ver'} Conquistas
           </button>
-          <button
-            onClick={() => setShowForm(true)}
+        <button
+          onClick={() => setShowForm(true)}
             className="btn btn-primary flex items-center gap-2"
-          >
-            <Plus size={16} />
-            Nova Meta
-          </button>
+        >
+          <Plus size={16} />
+          Nova Meta
+        </button>
         </div>
       </div>
 

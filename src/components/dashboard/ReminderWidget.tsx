@@ -1,8 +1,9 @@
 import React from 'react';
 import { useReminders } from '../../hooks/useReminders';
 import { ReminderService } from '../../services/ReminderService';
-import { Bell, Clock, Calendar } from 'lucide-react';
+import { Bell, Clock, Calendar, Check } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const ReminderWidget: React.FC = () => {
   const { 
@@ -10,12 +11,32 @@ const ReminderWidget: React.FC = () => {
     getUpcomingReminders, 
     getOverdueReminders,
     stats,
-    loading 
+    loading,
+    refresh
   } = useReminders();
 
   const todayReminders = getTodayReminders();
   const upcomingReminders = getUpcomingReminders();
   const overdueReminders = getOverdueReminders();
+
+  const handleMarkAsCompleted = async (reminderId: string, scheduleId?: string) => {
+    try {
+      if (scheduleId) {
+        await ReminderService.markScheduleAsSent(scheduleId);
+        toast.success('Lembrete marcado como concluído!');
+      } else {
+        toast.error('Agendamento não encontrado');
+        return;
+      }
+      // Aguardar um pouco antes de atualizar para dar tempo do banco processar
+      setTimeout(() => {
+        refresh();
+      }, 500);
+    } catch (error) {
+      console.error('Erro ao marcar lembrete como concluído:', error);
+      toast.error('Erro ao marcar lembrete como concluído');
+    }
+  };
 
   if (loading) {
     return (
@@ -35,6 +56,56 @@ const ReminderWidget: React.FC = () => {
   const totalReminders = (stats?.today_reminders || 0) + (stats?.upcoming_reminders || 0);
   const hasOverdue = overdueReminders.length > 0;
 
+  const ReminderItem: React.FC<{
+    reminder: any;
+    showActions?: boolean;
+  }> = ({ reminder, showActions = true }) => {
+    const nextSchedule = reminder.next_schedule || reminder.schedules?.[0];
+    
+    return (
+      <div className="flex items-start justify-between group w-full min-h-0">
+        <div className="flex-1 min-w-0 mr-3">
+          <div className="flex items-start gap-2 mb-1">
+            <span className="text-sm flex-shrink-0 mt-0.5">{ReminderService.getReminderIcon(reminder.reminder_type)}</span>
+            <div className="min-w-0 flex-1">
+              <h4 className="text-sm text-gray-700 dark:text-gray-300 font-medium break-words">
+                {reminder.title}
+              </h4>
+            </div>
+          </div>
+          {reminder.description && (
+            <div className="ml-6 mb-1">
+              <p className="text-xs text-gray-500 dark:text-gray-400 break-words leading-relaxed">
+                {reminder.description}
+              </p>
+            </div>
+          )}
+          {nextSchedule && (
+            <div className="ml-6">
+              <div className="text-xs text-gray-500 dark:text-gray-400">
+                {reminder.target_time || new Date(nextSchedule.scheduled_time).toLocaleTimeString('pt-BR', { 
+                  hour: '2-digit', 
+                  minute: '2-digit' 
+                })}
+              </div>
+            </div>
+          )}
+        </div>
+        {showActions && (
+          <div className="flex items-center gap-1 ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button
+              onClick={() => handleMarkAsCompleted(reminder.id, nextSchedule?.id)}
+              className="p-1 text-green-600 hover:text-green-700 hover:bg-green-50 dark:hover:bg-green-900/20 rounded transition-colors"
+              title="Marcar como concluído"
+            >
+              <Check className="w-3 h-3" />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="card p-6">
       <div className="flex items-center justify-between mb-4">
@@ -50,28 +121,6 @@ const ReminderWidget: React.FC = () => {
         </Link>
       </div>
 
-      {/* Estatísticas rápidas */}
-      <div className="grid grid-cols-3 gap-4 mb-4">
-        <div className="text-center">
-          <div className={`text-2xl font-bold ${hasOverdue ? 'text-red-600' : 'text-ikigai-green'}`}>
-            {totalReminders}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Total</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-ikigai-green-dark">
-            {stats?.today_reminders || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Hoje</div>
-        </div>
-        <div className="text-center">
-          <div className="text-2xl font-bold text-ikigai-black">
-            {stats?.upcoming_reminders || 0}
-          </div>
-          <div className="text-xs text-gray-600 dark:text-gray-400">Próximos</div>
-        </div>
-      </div>
-
       {/* Lista de lembretes */}
       <div className="space-y-3">
         {/* Lembretes atrasados */}
@@ -81,13 +130,13 @@ const ReminderWidget: React.FC = () => {
               <Clock className="w-4 h-4 text-red-500" />
               <span className="text-sm font-medium text-red-600">Atrasados</span>
             </div>
-            {overdueReminders.slice(0, 2).map((reminder) => (
-              <div key={reminder.id} className="text-sm text-gray-700 dark:text-gray-300 mb-1">
-                {ReminderService.getReminderIcon(reminder.reminder_type)} {reminder.title}
-              </div>
-            ))}
+            <div className="space-y-2">
+              {overdueReminders.slice(0, 2).map((reminder) => (
+                <ReminderItem key={reminder.id} reminder={reminder} />
+              ))}
+            </div>
             {overdueReminders.length > 2 && (
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                 +{overdueReminders.length - 2} mais
               </div>
             )}
@@ -101,18 +150,13 @@ const ReminderWidget: React.FC = () => {
               <Calendar className="w-4 h-4 text-ikigai-green" />
               <span className="text-sm font-medium text-ikigai-green">Hoje</span>
             </div>
-            {todayReminders.slice(0, 3).map((reminder) => (
-              <div key={reminder.id} className="text-sm text-gray-700 dark:text-gray-300 mb-1">
-                {ReminderService.getReminderIcon(reminder.reminder_type)} {reminder.title}
-                {reminder.target_time && (
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                    {reminder.target_time}
-                  </span>
-                )}
-              </div>
-            ))}
+            <div className="space-y-2">
+              {todayReminders.slice(0, 3).map((reminder) => (
+                <ReminderItem key={reminder.id} reminder={reminder} />
+              ))}
+            </div>
             {todayReminders.length > 3 && (
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                 +{todayReminders.length - 3} mais
               </div>
             )}
@@ -126,18 +170,13 @@ const ReminderWidget: React.FC = () => {
               <Bell className="w-4 h-4 text-ikigai-black" />
               <span className="text-sm font-medium text-ikigai-black">Próximos</span>
             </div>
-            {upcomingReminders.slice(0, 3).map((reminder) => (
-              <div key={reminder.id} className="text-sm text-gray-700 dark:text-gray-300 mb-1">
-                {ReminderService.getReminderIcon(reminder.reminder_type)} {reminder.title}
-                {reminder.next_schedule && (
-                  <span className="text-xs text-gray-500 dark:text-gray-400 ml-2">
-                    {new Date(reminder.next_schedule.scheduled_time).toLocaleDateString('pt-BR')}
-                  </span>
-                )}
-              </div>
-            ))}
+            <div className="space-y-2">
+              {upcomingReminders.slice(0, 3).map((reminder) => (
+                <ReminderItem key={reminder.id} reminder={reminder} showActions={false} />
+              ))}
+            </div>
             {upcomingReminders.length > 3 && (
-              <div className="text-xs text-gray-500 dark:text-gray-400">
+              <div className="text-xs text-gray-500 dark:text-gray-400 mt-2">
                 +{upcomingReminders.length - 3} mais
               </div>
             )}
