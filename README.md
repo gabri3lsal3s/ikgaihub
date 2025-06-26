@@ -1,250 +1,107 @@
-# 🎯 IkigaiHub
+# 🎯 IkigaiHub - PWA de Gestão de Saúde
 
-> **Hub de Ferramentas de Saúde - PWA mobile-first para gestão de plano alimentar e exercícios**
+> **Versão**: v1.1.0 | **Status**: Sistema de Lembretes Completo ✅  
+> **Próxima Fase**: Recursos Avançados 📋
 
-[![React](https://img.shields.io/badge/React-18.2.0-blue.svg)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.2.2-blue.svg)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-5.0.0-purple.svg)](https://vitejs.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.3.5-38B2AC.svg)](https://tailwindcss.com/)
-[![Supabase](https://img.shields.io/badge/Supabase-2.50.2-green.svg)](https://supabase.com/)
-[![PWA](https://img.shields.io/badge/PWA-Ready-orange.svg)](https://web.dev/progressive-web-apps/)
+Um PWA mobile-first desenvolvido para facilitar a gestão completa de saúde pessoal, com foco em nutrição, exercícios, metas e lembretes inteligentes.
 
-## 📋 Visão Geral
+## 🚀 **Funcionalidades Principais**
 
-O **IkigaiHub** é uma aplicação web progressiva (PWA) mobile-first desenvolvida para facilitar a gestão completa de saúde pessoal. O projeto oferece uma interface intuitiva para gerenciar plano alimentar e exercícios físicos, com sincronização entre dispositivos.
+### ✅ **Sistema de Autenticação**
+- Login/registro seguro com Supabase Auth
+- Proteção de rotas e contexto de autenticação
+- Gerenciamento de sessão persistente
 
-### 🎯 Proposta de Valor
-- **Simplicidade**: Interface intuitiva e fácil de usar
-- **Personalização**: Planos adaptados às necessidades individuais
-- **Acessibilidade**: Disponível em qualquer dispositivo via PWA
-- **Sincronização**: Dados persistentes e sincronizados entre dispositivos
-- **Inteligência**: Dashboard que mostra informações relevantes baseadas no horário
+### ✅ **CRUD Completo**
+- **Receitas**: Criação, edição, exclusão e categorização por tipo de refeição
+- **Exercícios**: Gerenciamento de treinos com sets, reps e progressão
+- Interface responsiva e intuitiva para todas as operações
 
-## 🚀 Status do Projeto
+### ✅ **Dashboard Inteligente**
+- Estatísticas em tempo real
+- Widgets especializados (nutrição, exercícios, metas, lembretes)
+- Próxima refeição e exercícios do dia
+- Progresso visual e métricas de performance
 
-### **Progresso Geral**: 90% Concluído
-### **Versão Atual**: v1.0.0
-### **Fase Atual**: Fase 8 - Sistema de Lembretes (Em Desenvolvimento)
+### ✅ **Sistema de Metas**
+- Criação e acompanhamento de metas personalizadas
+- Tipos: exercício, nutrição, peso, frequência
+- Sistema de progresso e conquistas
+- Gamificação com badges e streaks
 
-### **Fases Concluídas** ✅
-- **Fase 1**: Base do Projeto (v0.3.0) ✅
-- **Fase 2**: Sistema de Autenticação (v0.4.0) ✅
-- **Fase 3**: CRUD Básico (v0.5.0 - v0.6.0) ✅
-- **Fase 4**: Dashboard Inteligente (v0.7.0) ✅
-- **Fase 5**: Melhorias nas Estatísticas (v0.8.0) ✅
-- **Fase 6**: Sistema de Metas (v0.9.0) ✅
-- **Fase 7**: PWA Completo (v1.0.0) ✅
+### ✅ **PWA Completo**
+- Service Worker customizado com cache inteligente
+- Funcionalidades offline completas
+- Push notifications e background sync
+- Instalação na tela inicial
+- Sincronização automática online/offline
 
-## 🏗️ Stack Tecnológica
+### ✅ **Sistema de Lembretes** (NOVO!)
+- Lembretes personalizados para refeições, exercícios e metas
+- Agendamentos recorrentes (diário, semanal, mensal)
+- Notificações push com configurações avançadas
+- Horário silencioso e antecedência configurável
+- Histórico de notificações e estatísticas
 
-### **Frontend**
-- **Framework**: React 18 + TypeScript + Vite
+## 🛠️ **Stack Tecnológica**
+
+- **Frontend**: React 18 + TypeScript + Vite
 - **Styling**: Tailwind CSS com design system customizado
 - **Estado**: React Context API + Custom Hooks
-- **Roteamento**: React Router v6
-- **Formulários**: React Hook Form + Zod
-- **Notificações**: React Hot Toast
-- **Ícones**: Lucide React
-- **Gráficos**: Chart.js + React-Chartjs-2
+- **Backend**: Supabase (Auth + PostgreSQL + RLS)
+- **PWA**: Workbox + Service Workers + Push API
+- **Notificações**: React Hot Toast + Web Notifications API
 
-### **Backend**
-- **Plataforma**: Supabase (Auth + PostgreSQL + RLS)
-- **Autenticação**: Supabase Auth com JWT
-- **Banco de Dados**: PostgreSQL com Row Level Security
-- **Storage**: Supabase Storage (quando necessário)
+## 📱 **Como Usar**
 
-### **PWA** 📱
-- **Service Worker**: Workbox configurado com estratégias customizadas
-- **Manifest**: Gerado automaticamente pelo VitePWA com shortcuts
-- **Cache Strategy**: Implementado para fontes, APIs e assets
-- **Instalação**: Pronto para instalar na tela inicial
-- **Status**: 100% funcional com todas as features implementadas
-
-## 📱 Funcionalidades
-
-### ✅ **Implementadas**
-- **🔐 Autenticação**: Login/logout seguro com Supabase Auth
-- **🍽️ Gestão de Receitas**: CRUD completo com 6 tipos de refeição
-- **🏃‍♂️ Gestão de Exercícios**: CRUD completo organizado por dia da semana
-- **📊 Dashboard Inteligente**: Informações baseadas no horário atual
-- **📈 Estatísticas**: Componentes especializados para nutrição e exercícios
-- **🎯 Sistema de Metas**: Completo com progresso, conquistas e notificações
-- **📊 Gráficos Interativos**: Pizza e barras para visualização de dados
-- **✅ Marcadores de Conclusão**: Persistentes no Supabase
-- **🏆 Sistema de Conquistas**: Badges e notificações automáticas
-- **📱 PWA Completo**: 100% funcional com todas as features
-- **🔄 Funcionalidades Offline**: App funciona sem internet
-- **🔔 Push Notifications**: Notificações push completas
-- **⚡ Background Sync**: Sincronização em background
-- **📱 Instalação PWA**: Prompt de instalação elegante
-
-### 🔄 **Em Desenvolvimento**
-- **⏰ Sistema de Lembretes**: Notificações personalizadas (Fase 8)
-
-### 📋 **Planejadas**
-- **🏆 Gamificação Avançada**: Streaks, rankings e desafios
-- **🔗 Integrações**: APIs de nutrição e wearables
-- **📈 Histórico Detalhado**: Relatórios avançados de progresso
-
-## 🚀 Instalação e Configuração
-
-### **Pré-requisitos**
-- Node.js >= 18.0.0
-- npm >= 8.0.0
-- Conta no Supabase
-
-### **1. Clone o repositório**
+### **Instalação**
 ```bash
 git clone https://github.com/seu-usuario/ikgaihub.git
 cd ikgaihub
-```
-
-### **2. Instale as dependências**
-```bash
 npm install
 ```
 
-### **3. Configure as variáveis de ambiente**
+### **Configuração**
+1. Copie `env.example` para `.env`
+2. Configure suas credenciais do Supabase
+3. Execute o script SQL para criar as tabelas
+
+### **Desenvolvimento**
 ```bash
-cp env.example .env
-```
-
-Edite o arquivo `.env` com suas credenciais do Supabase:
-```env
-VITE_SUPABASE_URL=https://your-project.supabase.co
-VITE_SUPABASE_ANON_KEY=your-anon-key
-```
-
-### **4. Configure o Supabase**
-1. Crie um projeto no Supabase
-2. Execute os scripts SQL na ordem:
-   - `docs/sql/database-schema.sql`
-   - `docs/sql/goals-system.sql`
-   - `docs/sql/progress-tables.sql`
-3. Configure as políticas RLS se necessário
-
-### **5. Execute o projeto**
-```bash
-# Desenvolvimento
 npm run dev
+```
 
-# Build para produção
+### **Build para Produção**
+```bash
 npm run build
-
-# Preview da build
-npm run preview
 ```
 
-## 📱 PWA - Status e Funcionalidades
+## 🗺️ **Roadmap do Projeto**
 
-### **✅ Funcionalidades PWA Implementadas**
-- **Manifest**: Configurado com VitePWA plugin e shortcuts
-- **Service Worker**: Workbox com estratégias de cache customizadas
-- **Ícones**: Múltiplos tamanhos (192x192, 512x512) com maskable
-- **Meta Tags**: PWA meta tags completas
-- **Cache**: Fontes Google, APIs Supabase e assets estáticos
-- **Instalação**: Prompt de instalação elegante
-- **Funcionalidades Offline**: App funciona completamente offline
-- **Push Notifications**: Notificações push com ações
-- **Background Sync**: Sincronização automática em background
-- **Status Online/Offline**: Indicador visual de conexão
-- **Atualizações Automáticas**: Verificação e instalação de updates
+### **✅ Concluído (v0.3.0 - v1.1.0)**
+- **Fase 1**: Base do Projeto ✅
+- **Fase 2**: Sistema de Autenticação ✅
+- **Fase 3**: CRUD Básico ✅
+- **Fase 4**: Dashboard Inteligente ✅
+- **Fase 5**: Melhorias nas Estatísticas ✅
+- **Fase 6**: Sistema de Metas ✅
+- **Fase 7**: PWA Completo ✅
+- **Fase 8**: Sistema de Lembretes ✅
 
-### **📋 PWA - 100% Completo**
-- ✅ **Offline Mode**: Funcionalidades offline completas
-- ✅ **Push Notifications**: Notificações push implementadas
-- ✅ **Background Sync**: Sincronização em background
-- ✅ **App Shell**: Interface offline-first
-- ✅ **Cache Strategy**: Estratégias inteligentes de cache
-- ✅ **Install Prompt**: Prompt de instalação elegante
+### **📋 Próximas Fases**
+- **Fase 9**: Recursos Avançados (Relatórios, Insights)
+- **Fase 10**: Integrações Externas (Wearables, APIs)
 
-## 📁 Estrutura do Projeto
+## 📊 **Progresso Atual**
 
-```
-src/
-├── components/           # Componentes React
-│   ├── dashboard/       # Componentes do dashboard
-│   ├── goals/          # Componentes de metas
-│   └── ...             # Outros componentes
-├── contexts/           # Contextos React (AuthContext)
-├── controllers/        # Controladores (lógica de negócio)
-├── hooks/             # Custom hooks
-├── pages/             # Páginas da aplicação
-├── services/          # Serviços (acesso a dados)
-├── types/             # Tipos TypeScript
-├── utils/             # Utilitários
-├── styles/            # Estilos globais
-└── constants/         # Constantes da aplicação
-```
+- **Funcionalidades Core**: 100% ✅
+- **PWA Features**: 100% ✅
+- **Sistema de Lembretes**: 100% ✅
+- **Recursos Avançados**: 0% 📋
 
-## 🗄️ Banco de Dados
+**Total**: 85% Concluído
 
-### **Tabelas Principais**
-- `users` - Usuários autenticados (Supabase Auth)
-- `exercises` - Exercícios disponíveis
-- `recipes` - Receitas e refeições
-- `goals` - Metas do usuário
-- `goal_progress` - Rastreamento de progresso
-- `achievements` - Conquistas e badges
-- `exercise_completions` - Conclusões de exercícios
-- `recipe_completions` - Conclusões de receitas
-- `daily_stats` - Estatísticas diárias
-- `reminders` - Sistema de lembretes (planejado)
-
-### **Scripts SQL Disponíveis**
-- 📁 [docs/sql/database-schema.sql](./docs/sql/database-schema.sql) - Schema completo
-- 📁 [docs/sql/goals-system.sql](./docs/sql/goals-system.sql) - Sistema de metas
-- 📁 [docs/sql/progress-tables.sql](./docs/sql/progress-tables.sql) - Tabelas de progresso
-- 📁 [docs/sql/fix-rls-policies.sql](./docs/sql/fix-rls-policies.sql) - Políticas de segurança
-
-## 🧪 Testes
-
-```bash
-# Executar testes
-npm test
-
-# Executar testes com UI
-npm run test:ui
-
-# Cobertura de testes
-npm run test:coverage
-```
-
-## 🔧 Desenvolvimento
-
-### **Scripts Disponíveis**
-```bash
-npm run dev          # Servidor de desenvolvimento
-npm run build        # Build de produção
-npm run preview      # Preview do build
-npm run lint         # Verificação de lint
-npm run lint:fix     # Correção automática de lint
-npm run test         # Execução de testes
-npm run type-check   # Verificação de tipos TypeScript
-```
-
-### **Padrões de Código**
-- TypeScript strict mode
-- ESLint + Prettier
-- Componentes funcionais com hooks
-- Serviços para lógica de negócio
-- Custom hooks para reutilização
-
-## 📚 Documentação
-
-### **Documentação do Projeto**
-- 📁 [docs/projeto/PRD.md](./docs/projeto/PRD.md) - Product Requirements Document
-- 📁 [docs/projeto/ARQUITETURA.md](./docs/projeto/ARQUITETURA.md) - Arquitetura técnica
-- 📁 [docs/projeto/ROADMAP.md](./docs/projeto/ROADMAP.md) - Roadmap e cronograma
-- 📁 [docs/projeto/RESUMO-EXECUTIVO.md](./docs/projeto/RESUMO-EXECUTIVO.md) - Resumo executivo
-
-### **Instruções de Manutenção**
-- 📁 [docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md](./docs/instrucoes/INSTRUCOES-MANUTENCAO-METAS.md) - Manutenção do sistema de metas
-- 📁 [docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md](./docs/instrucoes/PWA-ASSETS-INSTRUCTIONS.md) - Instruções para assets PWA
-- 📁 [docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md](./docs/instrucoes/INSTRUCOES-CORRECAO-RLS.md) - Correção de políticas RLS
-- 📁 [docs/instrucoes/REORGANIZACAO-DOCUMENTACAO.md](./docs/instrucoes/REORGANIZACAO-DOCUMENTACAO.md) - Organização da documentação
-
-## 🤝 Contribuição
+## 🤝 **Contribuição**
 
 1. Fork o projeto
 2. Crie uma branch para sua feature (`git checkout -b feature/AmazingFeature`)
@@ -252,25 +109,15 @@ npm run type-check   # Verificação de tipos TypeScript
 4. Push para a branch (`git push origin feature/AmazingFeature`)
 5. Abra um Pull Request
 
-## 📄 Licença
+## 📄 **Licença**
 
 Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
 
-## 👨‍💻 Autor
+## 📞 **Contato**
 
-**Gabriel** - Desenvolvedor Full Stack
-
-- GitHub: [@seu-usuario](https://github.com/seu-usuario)
-- LinkedIn: [seu-linkedin](https://linkedin.com/in/seu-linkedin)
-
-## 🙏 Agradecimentos
-
-- [Supabase](https://supabase.com/) - Backend as a Service
-- [Vite](https://vitejs.dev/) - Build tool
-- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
-- [React](https://react.dev/) - UI Library
-- [TypeScript](https://www.typescriptlang.org/) - Type Safety
+- **Projeto**: [IkigaiHub](https://github.com/seu-usuario/ikgaihub)
+- **Email**: seu-email@exemplo.com
 
 ---
 
-**⭐ Se este projeto te ajudou, considere dar uma estrela no repositório!** 
+**Desenvolvido com ❤️ para uma vida mais saudável e organizada** 
